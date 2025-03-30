@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextBase - Home</title>
+  <link rel="stylesheet" href="styles/indexstyle.css" />
+  <link rel="stylesheet" href="styles/baseball-player-profilestyle.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Consistent site header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="NextBase Logo" />
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#" id="showProfile">My Profile</a></li>
+        <li><a href="playerhub.html">Player Hub</a></li>
+        <li><a href="contact.html">Sign Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home Section -->
+    <section class="home">
+      <h1>Welcome to NextBase</h1>
+      <p>
+        NextBase is a platform where high school baseball players can connect
+        with current college players for guidance, recruiting tips, and
+        mentorship.
+      </p>
+      <img
+        src="home-image.jpg"
+        alt="High school athlete on video call with college athlete"
+      />
+    </section>
+
+    <!-- Profile Section (Initially Hidden) -->
+    <section id="profileSectionContainer" style="display: none;">
+      <div class="header-content">
+        <img src="/api/placeholder/400/400" alt="Player Photo" class="profile-image" />
+        <div class="player-info">
+          <h1 id="displayPlayerName">John Doe</h1>
+          <div>
+            <span class="position-badge" id="displayPrimaryPosition">Pitcher</span>
+            <span class="position-badge" id="displaySecondaryPosition">First Base</span>
+          </div>
+          <p id="displaySchoolInfo">Central High School, Class of 2024</p>
+          <div class="social-links">
+            <a href="#" id="displayPerfectGameLink"><i class="fas fa-baseball-ball"></i></a>
+            <a href="#" id="displayInstagramLink"><i class="fab fa-instagram"></i></a>
+            <a href="#" id="displayTwitterLink"><i class="fab fa-twitter"></i></a>
+            <a href="#" id="displayYoutubeLink"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <section class="profile-section">
+        <h2 class="section-title"><i class="fas fa-user"></i> Player Overview</h2>
+        <div class="two-column">
+          <div>
+            <div class="personal-info-item">
+              <span class="info-label">Date of Birth:</span>
+              <span id="displayDob">January 1, 2006</span>
+            </div>
+            <div class="personal-info-item">
+              <span class="info-label">Location:</span>
+              <span id="displayLocation">New York, NY</span>
+            </div>
+            <div class="personal-info-item">
+              <span class="info-label">Height:</span>
+              <span id="displayHeight">6' 2"</span>
+            </div>
+            <div class="personal-info-item">
+              <span class="info-label">Weight:</span>
+              <span id="displayWeight">185 lbs</span>
+            </div>
+            <div class="personal-info-item">
+              <span class="info-label">Bats/Throws:</span>
+              <span id="displayBatThrow">Right/Right</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>Player Statement</h3>
+            <p class="statement-text" id="displayPlayerStatement">
+              I'm a passionate athlete dedicated to both baseball and academics,
+              striving for success on and off the field.
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 NextBase. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const showProfileLink = document.getElementById('showProfile');
+      const profileContainer = document.getElementById('profileSectionContainer');
+      const homeSection = document.querySelector('.home');
+
+      showProfileLink.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Hide Home, Show Profile
+        homeSection.style.display = 'none';
+        profileContainer.style.display = 'block';
+
+        // Scroll to Profile
+        profileContainer.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Players | Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #0a2342;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 20px;
+        }
+        
+        .player-card {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .player-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .player-photo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .player-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #0a2342;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .player-info {
+            flex: 1;
+        }
+        
+        .player-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .player-details {
+            display: flex;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .player-details span {
+            margin-right: 15px;
+        }
+        
+        .player-school {
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+        
+        .location-icon {
+            margin-right: 5px;
+            color: #666;
+        }
+        
+        .schedule-btn {
+            background-color: #0096db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .schedule-btn:hover {
+            background-color: #0078b0;
+        }
+        
+        .cursor-pointer {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Connect with your future teammates.</h1>
+        </header>
+        
+        <div class="player-list">
+            <!-- Player 1 -->
+            <div class="player-card">
+                <div class="player-number">1</div>
+                <div class="player-photo">
+                    <img src="placeholder-player.jpg" alt="Sam Gates">
+                </div>
+                <div class="player-info">
+                    <div class="player-name">Sam Gates</div>
+                    <div class="player-details">
+                        <span>OF</span>
+                        <span>Sr.</span>
+                        <span>5' 11"</span>
+                        <span>185 lbs</span>
+                    </div>
+                    <div class="player-school">
+                        <span class="location-icon">📍</span>
+                        Island Heights, NJ<br>
+                        Donovan Catholic
+                    </div>
+                </div>
+                <button class="schedule-btn" onclick="goToSchedulePage('Sam Gates', 'OF')">Schedule</button>
+                <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="cursor1">
+            </div>
+            
+            <!-- Player 2 -->
+            <div class="player-card">
+                <div class="player-number">2</div>
+                <div class="player-photo">
+                    <img src="placeholder-player.jpg" alt="Kobe Mentzer">
+                </div>
+                <div class="player-info">
+                    <div class="player-name">Kobe Mentzer</div>
+                    <div class="player-details">
+                        <span>OF</span>
+                        <span>Jr.</span>
+                        <span>6' 1"</span>
+                        <span>200 lbs</span>
+                    </div>
+                    <div class="player-school">
+                        <span class="location-icon">📍</span>
+                        Lyndhurst, NJ<br>
+                        Manhattanland
+                    </div>
+                </div>
+                <button class="schedule-btn" onclick="goToSchedulePage('Kobe Mentzer', 'OF')">Schedule</button>
+                <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="cursor2">
+            </div>
+            
+            <!-- Player 3 -->
+            <div class="player-card">
+                <div class="player-number">3</div>
+                <div class="player-photo">
+                    <img src="placeholder-player.jpg" alt="Graham Jeffries">
+                </div>
+                <div class="player-info">
+                    <div class="player-name">Graham Jeffries</div>
+                    <div class="player-details">
+                        <span>RHP</span>
+                        <span>Sr.</span>
+                        <span>6' 0"</span>
+                        <span>200 lbs</span>
+                    </div>
+                    <div class="player-school">
+                        <span class="location-icon">📍</span>
+                        Chelmsford, MA<br>
+                        Chelmsford
+                    </div>
+                </div>
+                <button class="schedule-btn" onclick="goToSchedulePage('Graham Jeffries', 'RHP')">Schedule</button>
+                <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="cursor3">
+            </div>
+            
+            <!-- Player 4 -->
+            <div class="player-card">
+                <div class="player-number">4</div>
+                <div class="player-photo">
+                    <img src="placeholder-player.jpg" alt="Max Haug">
+                </div>
+                <div class="player-info">
+                    <div class="player-name">Max Haug</div>
+                    <div class="player-details">
+                        <span>RHP</span>
+                        <span>Jr.</span>
+                        <span>6' 4"</span>
+                        <span>200 lbs</span>
+                    </div>
+                    <div class="player-school">
+                        <span class="location-icon">📍</span>
+                        Jacksonville, FL<br>
+                        Bolles
+                    </div>
+                </div>
+                <button class="schedule-btn" onclick="goToSchedulePage('Max Haug', 'RHP')">Schedule</button>
+                <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="cursor4">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo cursor animation for presentation
+        function showCursor(cursorId) {
+            document.querySelectorAll('.cursor-pointer').forEach(cursor => {
+                cursor.style.display = 'none';
+            });
+            
+            document.getElementById(cursorId).style.display = 'block';
+        }
+        
+        // Store selected player info in sessionStorage
+        function goToSchedulePage(playerName, position) {
+            sessionStorage.setItem('selectedPlayer', playerName);
+            sessionStorage.setItem('playerPosition', position);
+            window.location.href = 'schedule.html';
+        }
+        
+        // Demo animation - can be removed in production
+        let demoMode = false;
+        if (demoMode) {
+            setTimeout(() => showCursor('cursor1'), 1000);
+            setTimeout(() => showCursor('cursor2'), 3000);
+            setTimeout(() => {
+                showCursor('cursor2');
+                document.querySelectorAll('.schedule-btn')[1].classList.add('highlight');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

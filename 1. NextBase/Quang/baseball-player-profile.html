@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Player Profile</title>
+    <style>
+        :root {
+            --primary-color: #0a3b6c;
+            --secondary-color: #1a75ff;
+            --accent-color: #25b5ff;
+            --light-bg: #f5f8ff;
+            --white: #ffffff;
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 5px solid var(--secondary-color);
+            object-fit: cover;
+            margin-right: 30px;
+        }
+        
+        .player-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .position-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-nav {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-links a {
+            display: block;
+            padding: 15px 0;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--light-bg);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        .profile-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-bg);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .video-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .video-card {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background-color: #ddd;
+            position: relative;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .personal-info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+        
+        .award-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-bg);
+        }
+        
+        .award-icon {
+            font-size: 1.8rem;
+            color: goldenrod;
+            margin-right: 15px;
+        }
+        
+        .award-year {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .contact-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .statement-text {
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+            }
+            
+            .nav-links li {
+                flex-basis: 50%;
+            }
+        }
+
+        /* Chart styles */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        /* For radar chart */
+        .radar-chart-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Form styles */
+        #playerDataForm {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        #profileContainer {
+            display: none;
+        }
+    </style>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>NextBase Baseball Player Profile</h1>
+            </div>
+        </header>
+        
+        <!-- Form to collect player data -->
+        <form id="playerDataForm">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> Baseball Player Information</h2>
+            <p style="margin-bottom: 20px;">Enter your information from the recruitment form to generate your profile page</p>
+            
+            <div class="form-grid">
+                <div>
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Home City & State:</label>
+                        <input type="text" id="location" name="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>School Information</h3>
+                    <div class="form-group">
+                        <label for="school">High School/Club Team:</label>
+                        <input type="text" id="school" name="school">
+                    </div>
+                    <div class="form-group">
+                        <label for="gradYear">Graduation Year:</label>
+                        <input type="text" id="gradYear" name="gradYear">
+                    </div>
+                    <div class="form-group">
+                        <label for="primaryPosition">Primary Position:</label>
+                        <input type="text" id="primaryPosition" name="primaryPosition">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondaryPosition">Secondary Position:</label>
+                        <input type="text" id="secondaryPosition" name="secondaryPosition">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-grid">
+                <div>
+                    <h3>Physical Information</h3>
+                    <div class="form-group">
+                        <label for="height">Height (ft' in"):</label>
+                        <input type="text" id="height" name="height" placeholder="6' 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (lbs):</label>
+                        <input type="number" id="weight" name="weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="throws">Throwing Hand:</label>
+                        <select id="throws" name="throws">
+                            <option value="Right">Right</option>
+                            <option value="Left">Left</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bats">Batting Hand:</label>
+                        <select id="bats" name="bats">
+                            <option value="Right">Right</option>
+                            <option value="Left">Left</option>
+                            <option value="Switch">Switch</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Social Media</h3>
+                    <div class="form-group">
+                        <label for="perfectGame">Perfect Game:</label>
+                        <input type="url" id="perfectGame" name="perfectGame">
+                    </div>
+                    <div class="form-group">
+                        <label for="instagram">Instagram:</label>
+                        <input type="url" id="instagram" name="instagram">
+                    </div>
+                    <div class="form-group">
+                        <label for="twitter">Twitter:</label>
+                        <input type="url" id="twitter" name="twitter">
+                    </div>
+                    <div class="form-group">
+                        <label for="youtube">YouTube:</label>
+                        <input type="url" id="youtube" name="youtube">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-grid">
+                <div>
+                    <h3>Performance Metrics (Pitchers)</h3>
+                    <div class="form-group">
+                        <label for="fastballVelocity">Fastball Velocity (mph):</label>
+                        <input type="number" id="fastballVelocity" name="fastballVelocity">
+                    </div>
+                    <div class="form-group">
+                        <label for="spinRate">Spin Rate (RPM):</label>
+                        <input type="number" id="spinRate" name="spinRate">
+                    </div>
+                    <div class="form-group">
+                        <label for="strikeRatio">Strike/Walk Ratio:</label>
+                        <input type="number" id="strikeRatio" name="strikeRatio" step="0.1">
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Performance Metrics (Hitters & Fielders)</h3>
+                    <div class="form-group">
+                        <label for="exitVelocity">Exit Velocity (mph):</label>
+                        <input type="number" id="exitVelocity" name="exitVelocity">
+                    </div>
+                    <div class="form-group">
+                        <label for="armVelocity">Arm Velocity (mph):</label>
+                        <input type="number" id="armVelocity" name="armVelocity">
+                    </div>
+                    <div class="form-group">
+                        <label for="dash60yd">60-yd Dash (sec):</label>
+                        <input type="number" id="dash60yd" name="dash60yd" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="popTime">Pop Time (catchers, sec):</label>
+                        <input type="number" id="popTime" name="popTime" step="0.01">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-grid">
+                <div>
+                    <h3>Academic Information</h3>
+                    <div class="form-group">
+                        <label for="gpa">GPA (Unweighted):</label>
+                        <input type="number" id="gpa" name="gpa" step="0.01" max="4.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="sat">SAT Score:</label>
+                        <input type="number" id="sat" name="sat">
+                    </div>
+                    <div class="form-group">
+                        <label for="act">ACT Score:</label>
+                        <input type="number" id="act" name="act">
+                    </div>
+                    <div class="form-group">
+                        <label for="honorsCourses">AP/Honors Courses (comma separated):</label>
+                        <input type="text" id="honorsCourses" name="honorsCourses">
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Coaching Information</h3>
+                    <div class="form-group">
+                        <label for="coachName">Coach Name:</label>
+                        <input type="text" id="coachName" name="coachName">
+                    </div>
+                    <div class="form-group">
+                        <label for="coachEmail">Coach Email:</label>
+                        <input type="email" id="coachEmail" name="coachEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="coachPhone">Coach Phone:</label>
+                        <input type="tel" id="coachPhone" name="coachPhone">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="statement">Personal Statement (250 words max):</label>
+                <textarea id="statement" name="statement" maxlength="1500"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="awards">Baseball Awards & Honors (comma separated, include years):</label>
+                <textarea id="awards" name="awards" placeholder="All-State First Team (2024), Team MVP (2023), etc."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="videoLinks">Video Links (comma separated, include title):</label>
+                <textarea id="videoLinks" name="videoLinks" placeholder="Game Highlights: https://example.com, Skills Showcase: https://example.com"></textarea>
+            </div>
+            
+            <button type="submit" class="btn">Generate Profile</button>
+        </form>
+        
+        <!-- Profile Container - This will be shown after form submission -->
+        <div id="profileContainer">
+            <header>
+                <div class="header-content">
+                    <img src="/api/placeholder/400/400" alt="Player Photo" class="profile-image">
+                    <div class="player-info">
+                        <h1 id="displayPlayerName">John Doe</h1>
+                        <div>
+                            <span class="position-badge" id="displayPrimaryPosition">Pitcher</span>
+                            <span class="position-badge" id="displaySecondaryPosition">First Base</span>
+                        </div>
+                        <p id="displaySchoolInfo">Central High School, Class of 2024</p>
+                        <div class="social-links">
+                            <a href="#" id="displayPerfectGameLink" title="Perfect Game Profile"><i class="fas fa-baseball-ball"></i></a>
+                            <a href="#" id="displayInstagramLink" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" id="displayTwitterLink" title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" id="displayYoutubeLink" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <nav class="profile-nav">
+                <ul class="nav-links">
+                    <li><a href="#overview" class="active">Overview</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                    <li><a href="#videos">Videos</a></li>
+                    <li><a href="#academics">Academics</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <section id="overview" class="profile-section">
+                <h2 class="section-title"><i class="fas fa-user"></i> Player Overview</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Personal Information</h3>
+                        <div class="personal-info-item">
+                            <span class="info-label">Date of Birth:</span>
+                            <span id="displayDob">January 1, 2006</span>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Location:</span>
+                            <span id="displayLocation">New York, NY</span>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Height:</span>
+                            <span id="displayHeight">6' 2"</span>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Weight:</span>
+                            <span id="displayWeight">185 lbs</span>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Bats/Throws:</span>
+                            <span id="displayBatThrow">Right/Right</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3>Player Statement</h3>
+                        <p class="statement-text" id="displayPlayerStatement"></p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="performance" class="profile-section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Performance Metrics</h2>
+                
+                <div class="radar-chart-container">
+                    <canvas id="skillsRadarChart"></canvas>
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Pitching Metrics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayFastballVelocity">-</div>
+                                <div class="stat-label">Fastball Velocity (mph)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displaySpinRate">-</div>
+                                <div class="stat-label">Spin Rate (RPM)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayStrikeRatio">-</div>
+                                <div class="stat-label">Strike to Walk Ratio</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3>Hitting/Fielding Metrics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayExitVelocity">-</div>
+                                <div class="stat-label">Exit Velocity (mph)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayArmVelocity">-</div>
+                                <div class="stat-label">Arm Velocity (mph)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="display60ydDash">-</div>
+                                <div class="stat-label">60-yd Dash (sec)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayPopTime">-</div>
+                                <div class="stat-label">Pop Time (sec)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="videos" class="profile-section">
+                <h2 class="section-title"><i class="fas fa-video"></i> Video Showcase</h2>
+                <div class="video-showcase" id="videoContainer">
+                    <!-- Videos will be inserted here dynamically -->
+                </div>
+            </section>
+            
+            <section id="academics" class="profile-section">
+                <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Academic Information</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Academic Metrics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayGpa">-</div>
+                                <div class="stat-label">GPA (Unweighted)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displaySat">-</div>
+                                <div class="stat-label">SAT Score</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="displayAct">-</div>
+                                <div class="stat-label">ACT Score</div>
+                            </div>
+                        </div>
+                        
+                        <h3>AP/Honors Courses</h3>
+                        <ul id="displayHonorsCourses">
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3>Baseball Awards & Honors</h3>
+                        <div id="displayAwardsContainer">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact" class="profile-section">
+                <h2 class="section-title"><i class="fas fa-address-card"></i> Contact Information</h2>
+                <div class="two-column">
+                    <div class="contact-info">
+                        <h3>Player Contact</h3>
+                        <div class="personal-info-item">
+                            <span class="info-label">Email:</span>
+                            <a href="#" id="displayPlayerEmail"></a>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Phone:</span>
+                            <span id="displayPlayerPhone"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Coach Contact</h3>
+                        <div class="personal-info-item">
+                            <span class="info-label">Coach Name:</span>
+                            <span id="displayCoachName"></span>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Email:</span>
+                            <a href="#" id="displayCoachEmail"></a>
+                        </div>
+                        <div class="personal-info-item">
+                            <span class="info-label">Phone:</span>
+                            <span id="displayCoachPhone"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 NextBase Baseball Player Profile. Updated on March 20, 2025.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playerDataForm = document.getElementById('playerDataForm');
+            const profileContainer = document.getElementById('profileContainer');
+            
+            playerDataForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect form data
+                const formData = new FormData(playerDataForm);
+                const playerData = Object.fromEntries(formData.entries());
+                
+                // Parse and process data
+                const processedData = processFormData(playerData);
+                
+                // Update the profile with the processed data
+                updateProfile(processedData);
+                
+                // Hide the form and show the profile
+                playerDataForm.style.display = 'none';
+                profileContainer.style.display = 'block';
+                
+                // Create charts based on the data
+                createRadarChart(processedData);
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+            
+            // Handle navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Scroll to section
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 20,
+                    
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  /**
+   * Process form data to be used in the profile
+   * @param {Object} data - Form data object
+   * @return {Object} Processed data
+   */
+  function processFormData(data) {
+    // Format date of birth
+    let dobFormatted = '';
+    if (data.dob) {
+      const dobDate = new Date(data.dob);
+      dobFormatted = dobDate.toLocaleDateString('en-US', {
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric'
+      });
+    }
+    
+    // Process awards into array
+    const awards = data.awards ? data.awards.split(',').map(award => award.trim()).filter(award => award !== '') : [];
+    
+    // Process honors courses into array
+    const honorsCourses = data.honorsCourses ? data.honorsCourses.split(',').map(course => course.trim()).filter(course => course !== '') : [];
+    
+    // Process video links
+    const videoLinks = [];
+    if (data.videoLinks) {
+      const links = data.videoLinks.split(',');
+      links.forEach(link => {
+        link = link.trim();
+        if (link) {
+          // Split by colon to get title and URL
+          const colonIndex = link.indexOf(':');
+          if (colonIndex > 0) {
+            const title = link.substring(0, colonIndex).trim();
+            const url = link.substring(colonIndex + 1).trim();
+            if (url) {
+              videoLinks.push({ title, url });
+            }
+          } else {
+            // If no title format, just use the link as both
+            videoLinks.push({ title: 'Video', url: link });
+          }
+        }
+      });
+    }
+    
+    return {
+      fullName: data.fullName || 'Name Not Provided',
+      dob: dobFormatted,
+      location: data.location || '',
+      height: data.height || '',
+      weight: data.weight ? `${data.weight} lbs` : '',
+      batThrow: `${data.bats || ''}/${data.throws || ''}`,
+      primaryPosition: data.primaryPosition || '',
+      secondaryPosition: data.secondaryPosition || '',
+      school: data.school || '',
+      gradYear: data.gradYear || '',
+      statement: data.statement || '',
+      playerEmail: data.email || '',
+      playerPhone: data.phone || '',
+      coachName: data.coachName || '',
+      coachEmail: data.coachEmail || '',
+      coachPhone: data.coachPhone || '',
+      fastballVelocity: data.fastballVelocity || '-',
+      spinRate: data.spinRate || '-',
+      strikeRatio: data.strikeRatio || '-',
+      exitVelocity: data.exitVelocity || '-',
+      armVelocity: data.armVelocity || '-',
+      dash60yd: data.dash60yd || '-',
+      popTime: data.popTime || '-',
+      gpa: data.gpa || '-',
+      sat: data.sat || '-',
+      act: data.act || '-',
+      honorsCourses: honorsCourses,
+      awards: awards,
+      videoLinks: videoLinks,
+      perfectGameLink: data.perfectGame || '#',
+      instagramLink: data.instagram || '#',
+      twitterLink: data.twitter || '#',
+      youtubeLink: data.youtube || '#'
+    };
+  }
+
+  /**
+   * Update the profile with the processed data
+   * @param {Object} data - Processed data object
+   */
+  function updateProfile(data) {
+    // Basic info
+    document.getElementById('displayPlayerName').textContent = data.fullName;
+    document.getElementById('displayPrimaryPosition').textContent = data.primaryPosition;
+    document.getElementById('displaySecondaryPosition').textContent = data.secondaryPosition || 'N/A';
+    document.getElementById('displaySchoolInfo').textContent = `${data.school}, Class of ${data.gradYear}`;
+    
+    // Social media links
+    document.getElementById('displayPerfectGameLink').href = data.perfectGameLink;
+    document.getElementById('displayInstagramLink').href = data.instagramLink;
+    document.getElementById('displayTwitterLink').href = data.twitterLink;
+    document.getElementById('displayYoutubeLink').href = data.youtubeLink;
+    
+    // Personal information
+    document.getElementById('displayDob').textContent = data.dob;
+    document.getElementById('displayLocation').textContent = data.location;
+    document.getElementById('displayHeight').textContent = data.height;
+    document.getElementById('displayWeight').textContent = data.weight;
+    document.getElementById('displayBatThrow').textContent = data.batThrow;
+    document.getElementById('displayPlayerStatement').textContent = data.statement;
+    
+    // Performance metrics
+    document.getElementById('displayFastballVelocity').textContent = data.fastballVelocity;
+    document.getElementById('displaySpinRate').textContent = data.spinRate;
+    document.getElementById('displayStrikeRatio').textContent = data.strikeRatio;
+    document.getElementById('displayExitVelocity').textContent = data.exitVelocity;
+    document.getElementById('displayArmVelocity').textContent = data.armVelocity;
+    document.getElementById('display60ydDash').textContent = data.dash60yd;
+    document.getElementById('displayPopTime').textContent = data.popTime;
+    
+    // Academic information
+    document.getElementById('displayGpa').textContent = data.gpa;
+    document.getElementById('displaySat').textContent = data.sat;
+    document.getElementById('displayAct').textContent = data.act;
+    
+    // Honors courses
+    const honorsCoursesList = document.getElementById('displayHonorsCourses');
+    honorsCoursesList.innerHTML = '';
+    data.honorsCourses.forEach(course => {
+      const li = document.createElement('li');
+      li.textContent = course;
+      honorsCoursesList.appendChild(li);
+    });
+    
+    // Awards
+    const awardsContainer = document.getElementById('displayAwardsContainer');
+    awardsContainer.innerHTML = '';
+    data.awards.forEach(award => {
+      const awardItem = document.createElement('div');
+      awardItem.className = 'award-item';
+      
+      const icon = document.createElement('div');
+      icon.className = 'award-icon';
+      icon.innerHTML = '<i class="fas fa-trophy"></i>';
+      
+      const details = document.createElement('div');
+      
+      // Try to extract year from award
+      const yearMatch = award.match(/\((\d{4})\)/);
+      let awardText = award;
+      let yearText = '';
+      
+      if (yearMatch) {
+        yearText = yearMatch[1];
+        awardText = award.replace(/\(\d{4}\)/, '').trim();
+      }
+      
+      const awardName = document.createElement('div');
+      awardName.textContent = awardText;
+      
+      const awardYear = document.createElement('div');
+      awardYear.className = 'award-year';
+      awardYear.textContent = yearText;
+      
+      details.appendChild(awardName);
+      details.appendChild(awardYear);
+      
+      awardItem.appendChild(icon);
+      awardItem.appendChild(details);
+      
+      awardsContainer.appendChild(awardItem);
+    });
+    
+    // Contact information
+    document.getElementById('displayPlayerEmail').textContent = data.playerEmail;
+    document.getElementById('displayPlayerEmail').href = `mailto:${data.playerEmail}`;
+    document.getElementById('displayPlayerPhone').textContent = data.playerPhone;
+    document.getElementById('displayCoachName').textContent = data.coachName;
+    document.getElementById('displayCoachEmail').textContent = data.coachEmail;
+    document.getElementById('displayCoachEmail').href = `mailto:${data.coachEmail}`;
+    document.getElementById('displayCoachPhone').textContent = data.coachPhone;
+    
+    // Video showcase
+    const videoContainer = document.getElementById('videoContainer');
+    videoContainer.innerHTML = '';
+    
+    if (data.videoLinks.length === 0) {
+      const noVideos = document.createElement('p');
+      noVideos.textContent = 'No videos available.';
+      videoContainer.appendChild(noVideos);
+    } else {
+      data.videoLinks.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'video-thumbnail';
+        
+        const playIcon = document.createElement('div');
+        playIcon.className = 'play-icon';
+        playIcon.innerHTML = '<i class="fas fa-play"></i>';
+        playIcon.addEventListener('click', function() {
+          window.open(video.url, '_blank');
+        });
+        
+        thumbnail.appendChild(playIcon);
+        
+        const videoInfo = document.createElement('div');
+        videoInfo.className = 'video-info';
+        
+        const videoTitle = document.createElement('div');
+        videoTitle.className = 'video-title';
+        videoTitle.textContent = video.title;
+        
+        const videoLink = document.createElement('a');
+        videoLink.href = video.url;
+        videoLink.textContent = 'View Video';
+        videoLink.target = '_blank';
+        
+        videoInfo.appendChild(videoTitle);
+        videoInfo.appendChild(videoLink);
+        
+        videoCard.appendChild(thumbnail);
+        videoCard.appendChild(videoInfo);
+        
+        videoContainer.appendChild(videoCard);
+      });
+    }
+  }
+
+  /**
+   * Create a radar chart for player skills
+   * @param {Object} data - Processed data object
+   */
+  function createRadarChart(data) {
+    // Get metrics for radar chart
+    const metrics = {
+      'Fastball Velocity': normalizeValue(data.fastballVelocity, 70, 100),
+      'Spin Rate': normalizeValue(data.spinRate, 1800, 3000),
+      'Strike/Walk Ratio': normalizeValue(data.strikeRatio, 1, 5),
+      'Exit Velocity': normalizeValue(data.exitVelocity, 70, 110),
+      'Arm Velocity': normalizeValue(data.armVelocity, 70, 100),
+      '60-yd Dash': invertAndNormalizeValue(data.dash60yd, 6.0, 7.5),
+      'Pop Time': invertAndNormalizeValue(data.popTime, 1.7, 2.2)
+    };
+    
+    // Filter out metrics with no data
+    const labels = [];
+    const values = [];
+    
+    for (const [key, value] of Object.entries(metrics)) {
+      if (value !== null) {
+        labels.push(key);
+        values.push(value);
+      }
+    }
+    
+    // Create the radar chart
+    const ctx = document.getElementById('skillsRadarChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Player Skills',
+          data: values,
+          backgroundColor: 'rgba(26, 117, 255, 0.2)',
+          borderColor: 'rgba(26, 117, 255, 1)',
+          pointBackgroundColor: 'rgba(26, 117, 255, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(26, 117, 255, 1)'
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            angleLines: {
+              display: true
+            },
+            suggestedMin: 0,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Normalize a value to 0-100 scale
+   * @param {number|string} value - The value to normalize
+   * @param {number} min - The minimum expected value
+   * @param {number} max - The maximum expected value
+   * @return {number|null} Normalized value between 0-100 or null if invalid
+   */
+  function normalizeValue(value, min, max) {
+    if (value === '-' || value === '' || isNaN(parseFloat(value))) {
+      return null;
+    }
+    
+    const numValue = parseFloat(value);
+    let normalized = ((numValue - min) / (max - min)) * 100;
+    
+    // Clamp between 0-100
+    normalized = Math.max(0, Math.min(100, normalized));
+    
+    return normalized;
+  }
+
+  /**
+   * Invert and normalize value (for metrics where lower is better)
+   * @param {number|string} value - The value to normalize
+   * @param {number} min - The minimum expected value
+   * @param {number} max - The maximum expected value
+   * @return {number|null} Normalized value between 0-100 or null if invalid
+   */
+  function invertAndNormalizeValue(value, min, max) {
+    if (value === '-' || value === '' || isNaN(parseFloat(value))) {
+      return null;
+    }
+    
+    const numValue = parseFloat(value);
+    let normalized = ((max - numValue) / (max - min)) * 100;
+    
+    // Clamp between 0-100
+    normalized = Math.max(0, Math.min(100, normalized));
+    
+    return normalized;
+  }
+});
+    </script>
+</body>
+</html>

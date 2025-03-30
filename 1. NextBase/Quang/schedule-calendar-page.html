@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Date & Time | Booking System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #0a2342;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .booking-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            transform: rotate(45deg) translate(22px, -15px);
+            width: 150px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .player-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            background-color: #f1f1f1;
+        }
+        
+        .player-photo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .meeting-details h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #0a2342;
+        }
+        
+        .meeting-info {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .meeting-info i {
+            margin-right: 8px;
+        }
+        
+        .calendar-section h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #0a2342;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 200px;
+            margin: 0 auto;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #0a2342;
+        }
+        
+        .calendar {
+            margin-bottom: 30px;
+        }
+        
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .calendar th {
+            padding: 10px;
+            text-align: center;
+            font-weight: normal;
+            color: #666;
+        }
+        
+        .calendar td {
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .calendar .day {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            margin: 0 auto;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .calendar .day:hover {
+            background-color: #e6f7ff;
+        }
+        
+        .calendar .selected {
+            background-color: #0096db;
+            color: white;
+        }
+        
+        .calendar .disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .time-slots {
+            display: flex;
+            flex-direction: column;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .time-slot {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .time-slot:hover {
+            border-color: #0096db;
+            background-color: #f0f9ff;
+        }
+        
+        .time-slot.selected {
+            border-color: #0096db;
+            background-color: #e6f7ff;
+        }
+        
+        .timezone-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .settings-link, .report-link {
+            color: #0096db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .cursor-pointer {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            z-index: 10;
+            display: none;
+        }
+        
+        .layout {
+            display: flex;
+        }
+        
+        .calendar-container {
+            flex: 1;
+            margin-right: 20px;
+        }
+        
+        .time-container {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="booking-card">
+            <div class="premium-badge">PREMIUM</div>
+            
+            <div class="profile-section">
+                <div class="player-photo">
+                    <img src="placeholder-player.jpg" alt="Player Photo">
+                </div>
+                <div class="meeting-details">
+                    <h2 id="playerName">Glen Hellman</h2>
+                    <div class="meeting-info">
+                        <i>⏱️</i> 30 Minute Zoom Meeting
+                    </div>
+                </div>
+            </div>
+            
+            <div class="layout">
+                <div class="calendar-container">
+                    <div class="calendar-section">
+                        <h3>
+                            <div class="month-nav">
+                                <button class="nav-btn" id="prevMonth">&#8249;</button>
+                                <span id="currentMonth">February 2025</span>
+                                <button class="nav-btn" id="nextMonth">&#8250;</button>
+                            </div>
+                        </h3>
+                        
+                        <div class="calendar">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SUN</th>
+                                        <th>MON</th>
+                                        <th>TUE</th>
+                                        <th>WED</th>
+                                        <th>THU</th>
+                                        <th>FRI</th>
+                                        <th>SAT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calendarBody">
+                                    <!-- Calendar will be generated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="time-container">
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Time slots will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timezone-info">
+                <div>Time zone: <span id="timezone">Eastern Time - US & Canada (GMT-5)</span></div>
+                <div>
+                    <a href="#" class="settings-link">Cookie settings</a> | 
+                    <a href="#" class="report-link">Report abuse</a>
+                </div>
+            </div>
+            
+            <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="dateCursor">
+            <img src="cursor.png" alt="Cursor" class="cursor-pointer" id="timeCursor">
+        </div>
+    </div>
+
+    <script>
+        // Get player info from sessionStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const playerName = sessionStorage.getItem('selectedPlayer') || 'Glen Hellman';
+            document.getElementById('playerName').textContent = playerName;
+            
+            generateCalendar();
+            generateTimeSlots();
+            
+            // Add event listeners
+            document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
+            document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+        });
+        
+        // Current date for the calendar
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedTime = null;
+        
+        // Generate the calendar for the current month
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            document.getElementById('currentMonth').textContent = 
+                new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentDate);
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay(); // 0 = Sunday
+            
+            const calendarBody = document.getElementById('calendarBody');
+            calendarBody.innerHTML = '';
+            
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                // Create a week row
+                if (date > daysInMonth) break;
+                
+                const row = document.createElement('tr');
+                
+                // Fill in the days
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
+                    
+                    if (i === 0 && j < startingDay) {
+                        // Empty cells before the first day
+                        cell.textContent = '';
+                    } else if (date > daysInMonth) {
+                        // Empty cells after the last day
+                        cell.textContent = '';
+                    } else {
+                        // Valid day cell
+                        const dayDiv = document.createElement('div');
+                        dayDiv.classList.add('day');
+                        dayDiv.textContent = date;
+                        
+                        // Add date data attribute
+                        const dateObj = new Date(year, month, date);
+                        dayDiv.dataset.date = dateObj.toISOString().split('T')[0];
+                        
+                        // Highlight today
+                        const today = new Date();
+                        if (date === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                            dayDiv.classList.add('today');
+                        }
+                        
+                        // Disable past dates
+                        if (dateObj < new Date(today.setHours(0,0,0,0))) {
+                            dayDiv.classList.add('disabled');
+                        } else {
+                            // Add click handler for valid dates
+                            dayDiv.addEventListener('click', function() {
+                                selectDate(this);
+                            });
+                            
+                            // Highlight specific dates (demo purposes)
+                            if (date === 4) { // February 4th
+                                dayDiv.classList.add('selected');
+                                selectedDate = dayDiv.dataset.date;
+                            }
+                        }
+                        
+                        cell.appendChild(dayDiv);
+                        date++;
+                    }
+                    
+                    row.appendChild(cell);
+                }
+                
+                calendarBody.appendChild(row);
+            }
+        }
+        
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            generateCalendar();
+        }
+        
+        function selectDate(dayElement) {
+            // Clear previously selected date
+            document.querySelectorAll('.day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select new date
+            dayElement.classList.add('selected');
+            selectedDate = dayElement.dataset.date;
+            
+            // Update time slots based on selected date
+            generateTimeSlots();
+        }
+        
+        function generateTimeSlots() {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            timeSlotsContainer.innerHTML = '';
+            
+            // Sample time slots
+            const timeSlots = [
+                '9:00am', '9:30am', '11:30am', '12:00pm', 
+                '12:30pm', '1:00pm', '2:00pm'
+            ];
+            
+            timeSlots.forEach(time => {
+                const slot = document.createElement('div');
+                slot.classList.add('time-slot');
+                slot.textContent = time;
+                
+                // Preselect 11:30am for demo
+                if (time === '11:30am') {
+                    slot.classList.add('selected');
+                    selectedTime = time;
+                }
+                
+                slot.addEventListener('click', function() {
+                    // Clear previously selected time
+                    document.querySelectorAll('.time-slot.selected').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    
+                    // Select new time
+                    this.classList.add('selected');
+                    selectedTime = time;
+                    
+                    // Store selected date and time
+                    sessionStorage.setItem('selectedDate', selectedDate);
+                    sessionStorage.setItem('selectedTime', selectedTime);
+                    
+                    // Navigate to details page
+                    setTimeout(() => {
+                        window.location.href = 'details.html';
+                    }, 500);
+                });
+                
+                timeSlotsContainer.appendChild(slot);
+            });
+        }
+        
+        // Demo cursor animation
+        let demoMode = false;
+        if (demoMode) {
+            setTimeout(() => {
+                const dateCursor = document.getElementById('dateCursor');
+                dateCursor.style.display = 'block';
+                dateCursor.style.left = '150px';
+                dateCursor.style.top = '250px';
+            }, 1000);
+            
+            setTimeout(() => {
+                const timeCursor = document.getElementById('timeCursor');
+                timeCursor.style.display = 'block';
+                timeCursor.style.left = '550px';
+                timeCursor.style.top = '250px';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

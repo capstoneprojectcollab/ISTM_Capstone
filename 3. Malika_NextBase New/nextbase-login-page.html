@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/nextbaseloginstyle.css">
+    <title>NextBase - Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo"><img src="logo.png" alt="Logo" height="50"></div>
+            <h1>NextBase is a platform where high school baseball players can connect with current college players for guidance, recruiting tips, and mentorship.</h1>
+        </div>
+
+        <div class="login-content">
+            <div class="tabs">
+                <div class="tab active" data-tab="login">Login</div>
+                <div class="tab" data-tab="register">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="tab-content active" id="login-tab">
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="toggle-password">
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password-btn" id="togglePassword">Show</button>
+                        </div>
+                        <div class="error-message" id="password-error">Password must be at least 6 characters</div>
+                    </div>
+                    
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe" style="display: inline; margin-bottom: 0;">Remember me</label>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Log In</button>
+                    
+                    <div class="login-options">
+                        <p>Or login with</p>
+                        <div class="social-login">
+                            <button type="button" class="social-btn" id="googleLogin">
+                                <img src="/api/placeholder/20/20" alt="Google Icon"> Google
+                            </button>
+                            <button type="button" class="social-btn" id="appleLogin">
+                                <img src="/api/placeholder/20/20" alt="Apple Icon"> Apple
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="login-footer">
+                    <a href="#" id="forgotPassword">Forgot Password?</a>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="tab-content" id="register-tab">
+                <form id="registerForm" class="login-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" name="registerEmail" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <div class="toggle-password">
+                            <input type="password" id="registerPassword" name="registerPassword" placeholder="Create a password" required>
+                            <button type="button" class="toggle-password-btn" id="toggleRegisterPassword">Show</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Create Account</button>
+                </form>
+                
+                <div class="login-options">
+                    <p>Or register with</p>
+                    <div class="social-login">
+                        <button type="button" class="social-btn" id="googleRegister">
+                            <img src="/api/placeholder/20/20" alt="Google Icon"> Google
+                        </button>
+                        <button type="button" class="social-btn" id="appleRegister">
+                            <img src="/api/placeholder/20/20" alt="Apple Icon"> Apple
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to current tab and content
+                    this.classList.add('active');
+                    
+                    if (tabId === 'login') {
+                        document.getElementById('login-tab').classList.add('active');
+                    } else if (tabId === 'register') {
+                        document.getElementById('register-tab').classList.add('active');
+                    }
+                });
+            });
+            
+            // Password visibility toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
+            const passwordField = document.getElementById('password');
+            const registerPasswordField = document.getElementById('registerPassword');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                this.textContent = type === 'password' ? 'Show' : 'Hide';
+            });
+            
+            toggleRegisterPassword.addEventListener('click', function() {
+                const type = registerPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                registerPasswordField.setAttribute('type', type);
+                this.textContent = type === 'password' ? 'Show' : 'Hide';
+            });
+            
+            // Form validation
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Email validation
+                if (!validateEmail(email)) {
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').style.display = 'none';
+                }
+                
+                // Password validation
+                if (password.length < 6) {
+                    document.getElementById('password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('password-error').style.display = 'none';
+                }
+                
+                if (isValid) {
+                    // Simulate login
+                    window.location.href = "index.html";
+                    // Redirect would happen here in a real application
+                }
+            });
+            
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                let isValid = true;
+                
+                // Simple validation
+                if (!fullName || !email || !password) {
+                    isValid = false;
+                    alert('Please fill in all required fields');
+                }
+                
+                if (password !== confirmPassword) {
+                    isValid = false;
+                    alert('Passwords do not match');
+                }
+                
+                if (isValid) {
+                    // Simulate registration
+                    window.location.href = "baseball-player-profile.html";
+                    // Switch to login tab
+                    tabs[0].click();
+                }
+            });
+            
+            // Forgot password functionality
+            const forgotPasswordLink = document.getElementById('forgotPassword');
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Please enter your email address to reset your password:');
+                
+                if (email && validateEmail(email)) {
+                    alert(`Password reset instructions have been sent to ${email}`);
+                } else if (email) {
+                    alert('Please enter a valid email address');
+                }
+            });
+            
+            // Social login buttons
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const provider = this.textContent.trim();
+                    alert(`Logging in with ${provider}... This would redirect to the provider's authentication page.`);
+                });
+            });
+            
+            // Helper function for email validation
+            function validateEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+        });
+    </script>
+</body>
+</html>

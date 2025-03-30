@@ -1,0 +1,248 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Availability - Baseball Player Profile</title>
+    <style>
+        :root {
+            --primary-color: #0a3b6c;
+            --secondary-color: #1a75ff;
+            --accent-color: #25b5ff;
+            --light-bg: #f5f8ff;
+            --white: #ffffff;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .availability-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .availability-form {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        .form-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+
+        .day-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .day-checkbox {
+            display: none;
+        }
+
+        .day-label {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .day-checkbox:checked + .day-label {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .time-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .time-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time-group label {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .time-group input[type="time"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .mentorship-type {
+            display: flex;
+            gap: 15px;
+        }
+
+        .mentorship-type label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 600px) {
+            .day-selection, .time-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="availability-header">
+            <h1>Set Your Mentorship Availability</h1>
+            <p>Choose when you're available for mentorship and coaching</p>
+        </div>
+
+        <form id="availabilityForm" class="availability-form">
+            <div class="form-section">
+                <h3>Select Available Days</h3>
+                <div class="day-selection">
+                    <input type="checkbox" id="monday" name="days" value="monday" class="day-checkbox">
+                    <label for="monday" class="day-label">Monday</label>
+
+                    <input type="checkbox" id="tuesday" name="days" value="tuesday" class="day-checkbox">
+                    <label for="tuesday" class="day-label">Tuesday</label>
+
+                    <input type="checkbox" id="wednesday" name="days" value="wednesday" class="day-checkbox">
+                    <label for="wednesday" class="day-label">Wednesday</label>
+
+                    <input type="checkbox" id="thursday" name="days" value="thursday" class="day-checkbox">
+                    <label for="thursday" class="day-label">Thursday</label>
+
+                    <input type="checkbox" id="friday" name="days" value="friday" class="day-checkbox">
+                    <label for="friday" class="day-label">Friday</label>
+
+                    <input type="checkbox" id="saturday" name="days" value="saturday" class="day-checkbox">
+                    <label for="saturday" class="day-label">Saturday</label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Available Time Range</h3>
+                <div class="time-selection">
+                    <div class="time-group">
+                        <label for="startTime">Start Time</label>
+                        <input type="time" id="startTime" name="startTime" required>
+                    </div>
+                    <div class="time-group">
+                        <label for="endTime">End Time</label>
+                        <input type="time" id="endTime" name="endTime" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Mentorship Type</h3>
+                <div class="mentorship-type">
+                    <label>
+                        <input type="checkbox" name="mentorshipType" value="onsite"> 
+                        On-Site Training
+                    </label>
+                    <label>
+                        <input type="checkbox" name="mentorshipType" value="virtual"> 
+                        Virtual Coaching
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Save Availability</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const availabilityForm = document.getElementById('availabilityForm');
+
+            availabilityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Collect form data
+                const formData = new FormData(availabilityForm);
+                const availabilityData = {
+                    days: formData.getAll('days'),
+                    startTime: formData.get('startTime'),
+                    endTime: formData.get('endTime'),
+                    mentorshipTypes: formData.getAll('mentorshipType')
+                };
+
+                // Validate data
+                if (availabilityData.days.length === 0) {
+                    alert('Please select at least one day');
+                    return;
+                }
+
+                if (availabilityData.startTime >= availabilityData.endTime) {
+                    alert('End time must be later than start time');
+                    return;
+                }
+
+                // In a real application, you would send this data to a server
+                console.log('Availability Data:', availabilityData);
+
+                
+                alert('Availability successfully updated!');
+
+            });
+        });
+    </script>
+</body>
+</html>
+```

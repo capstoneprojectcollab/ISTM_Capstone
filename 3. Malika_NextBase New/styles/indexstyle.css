@@ -1,0 +1,97 @@
+/* Reset default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body styling */
+body {
+    background-color: #f0f2f5;
+    color: #0a1e3c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styling */
+header {
+    background-color: #082567;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+/* Nav bar */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #4aa9e6;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home {
+    max-width: 800px;
+    text-align: center;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.home img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Makes it look better if it needs to fill space */
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.home h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #0a1e3c;
+}
+
+.home p {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffffff;
+    color: #888;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
