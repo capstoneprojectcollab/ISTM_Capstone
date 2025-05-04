@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextBase - Schedule Meeting</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #0a2157;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        header {
+    background-color: #082567;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #4aa9e6;
+}
+
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .profile-card {
+            background-color: #0a2157;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .profile-badge {
+            display: inline-block;
+            background-color: #4b9cd3;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        .profile-badge.blue {
+            background-color: #4b9cd3;
+        }
+
+        .profile-badge.purple {
+            background-color: #7b68ee;
+        }
+
+        .university {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .scheduling-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .note-box {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .note-box textarea {
+            width: 100%;
+            height: 160px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            resize: none;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .calendar-box {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .month-year {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .weekdays div {
+            padding: 5px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1/1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+
+        .calendar-day.active {
+            background-color: #4b9cd3;
+            color: white;
+        }
+
+        .calendar-day.disabled {
+            color: #c0c0c0;
+            cursor: not-allowed;
+        }
+
+        .time-slots {
+            margin-top: 20px;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .time-slot {
+            padding: 8px 12px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+
+        .time-slot:hover {
+            background-color: #e6f2ff;
+        }
+
+        .time-slot.selected {
+            background-color: #4b9cd3;
+            color: white;
+        }
+
+        .schedule-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #4b9cd3;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .schedule-button:hover {
+            background-color: #3a8bc3;
+        }
+
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .payment-details {
+            margin-bottom: 20px;
+        }
+
+        .payment-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .payment-methods {
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .payment-method.selected {
+            border-color: #4b9cd3;
+            background-color: #f0f8ff;
+        }
+
+        .payment-method input {
+            margin-right: 10px;
+        }
+
+        .payment-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-details {
+            margin-top: 20px;
+        }
+
+        .card-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .card-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-row .card-input {
+            flex: 1;
+        }
+
+        .pay-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4b9cd3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .pay-button:hover {
+            background-color: #3a8bc3;
+        }
+
+        /* Confirmation Modal */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-modal.active {
+            display: flex;
+        }
+
+        .confirmation-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .confirmation-icon {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-details {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-detail {
+            margin-bottom: 8px;
+        }
+
+        .close-confirmation {
+            padding: 10px 20px;
+            background-color: #4b9cd3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+          <img src="logo.png" alt="NextBase Logo" />
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home_1.html">Home</a></li>
+            <li><a href="recruiting-feedback.html">Recruiting Feedback</a></li>
+            <li><a href="my_schedule.html">My Schedule</a></li>
+            <li><a href="profile_page.html">My Profile</a></li>
+            <li><a href="player_directory.html">Player Hub</a></li>
+            <li><a href="home.html">Logout</a></li>
+          </ul>
+        </nav>
+      </header>
+
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-photo">
+                <img src="" alt="Player Photo" id="profile-img">
+            </div>
+            <div class="profile-info">
+                <h2 id="player-name"></h2>
+                <div class="profile-badges">
+                    <span class="profile-badge blue" id="player-position"></span>
+<span class="profile-badge purple" id="player-highschool"></span>
+                </div>
+                <div class="university" id="player-university"></div>
+                <div class="social-icons">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">t</div>
+                    <div class="social-icon">i</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scheduling-container">
+            <div class="note-box">
+                <h3>Please share anything that will help prepare for our meeting</h3>
+                <textarea id="meeting-notes" placeholder="Enter any notes, questions, or topics you'd like to discuss..."></textarea>
+            </div>
+
+            <div class="calendar-box">
+                <div class="month-header">
+                    <div class="month-year">May 2025</div>
+                </div>
+                <div class="weekdays">
+                    <div>SUN</div>
+                    <div>MON</div>
+                    <div>TUE</div>
+                    <div>WED</div>
+                    <div>THU</div>
+                    <div>FRI</div>
+                    <div>SAT</div>
+                </div>
+                <div class="calendar-days" id="calendar-days">
+                    
+                </div>
+                <div class="time-slots" id="time-slots">
+                    
+                </div>
+            </div>
+        </div>
+
+        <button class="schedule-button" id="schedule-button">Schedule Event</button>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Complete Your Booking</div>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="payment-details">
+                <div class="payment-detail">
+                    <div id="meeting-with-name">Meeting with ...</div>
+                    <div id="meeting-date-time">May 15, 2025 • 7:30pm</div>
+                </div>
+                <div class="payment-detail">
+                    <div>Duration</div>
+                    <div>30 minutes</div>
+                </div>
+                <div class="payment-detail">
+                    <div><strong>Total</strong></div>
+                    <div><strong>$50.00</strong></div>
+                </div>
+            </div>
+            <div class="payment-methods">
+                <div class="payment-method selected">
+                    <input type="radio" name="payment-method" id="credit-card" checked>
+                    <div class="payment-icon">CC</div>
+                    <label for="credit-card">Credit Card</label>
+                </div>
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" id="paypal">
+                    <div class="payment-icon">PP</div>
+                    <label for="paypal">PayPal</label>
+                </div>
+            </div>
+            <div class="card-details" id="card-details">
+                <input type="text" class="card-input" placeholder="Card Number" id="card-number">
+                <div class="card-row">
+                    <input type="text" class="card-input" placeholder="MM/YY" id="card-expiry">
+                    <input type="text" class="card-input" placeholder="CVC" id="card-cvc">
+                </div>
+                <input type="text" class="card-input" placeholder="Cardholder Name" id="card-name">
+                <button class="pay-button" id="pay-button">Pay $50.00</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmation-modal">
+        <div class="confirmation-content">
+            <div class="confirmation-icon">✓</div>
+            <div class="confirmation-message" id="confirmation-message">
+                You scheduled a call with Sam Gates
+            </div>
+            <div class="confirmation-details">
+                <div class="confirmation-detail">
+                    <strong>Date:</strong> <span id="confirmation-date">May 15, 2025</span>
+                </div>
+                <div class="confirmation-detail">
+                    <strong>Time:</strong> <span id="confirmation-time">7:30 PM</span>
+                </div>
+                <div class="confirmation-detail">
+                    <strong>Duration:</strong> 30 minutes
+                </div>
+                <div class="confirmation-detail">
+                    <strong>Payment:</strong> $50.00 (Paid)
+                </div>
+            </div>
+            <button class="close-confirmation" id="close-confirmation">Done</button>
+        </div>
+    </div>
+    
+
+    <script>
+    
+    // Get player ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const playerId = urlParams.get('id');
+
+// Sample player data (same structure as your directory page)
+const players = [
+  {
+    id: 1,
+    name: "Liam Peterson",
+    university: "The George Washington University (D1)",
+    position: "OF",
+    class: "Sr.",
+    height: "5' 11\"",
+    weight: "185 lbs",
+    hometown: "Island Heights, NJ",
+    highschool: "Donovan Catholic",
+    photo: "playerimages/liam.png"
+  },
+  {
+        id: 2,
+        name: "Noah Reynolds",
+        university: "The George Washington University (D1)",
+        position: "OF",
+        class: "Jr.",
+        height: "6' 1\"",
+        weight: "200 lbs",
+        hometown: "Lyndhurst, NJ",
+        highschool: "Manhattanland",
+        photo: "playerimages/noah.png"
+      },
+      {
+        id: 3,
+        name: "Elijah Brooks",
+        university: "The George Washington University (D1)",
+        position: "OF",
+        class: "Fr.",
+        height: "6' 1\"",
+        weight: "200 lbs",
+        hometown: "Denville, NJ",
+        highschool: "Morris Knolls",
+        photo: "playerimages/elijah.png"
+      },
+      {
+        id: 4,
+        name: "Mason Rivera",
+        university: "Rutgers University (D1)",
+        position: "IF",
+        class: "So.",
+        height: "5' 10\"",
+        weight: "175 lbs",
+        hometown: "Edison, NJ",
+        highschool: "Edison High",
+        photo: "playerimages/mason.png"
+      },
+      {
+        id: 5,
+        name: "Logan Sanders",
+        university: "Rutgers University (D1)",
+        position: "P",
+        class: "Jr.",
+        height: "6' 3\"",
+        weight: "210 lbs",
+        hometown: "Princeton, NJ",
+        highschool: "Princeton High",
+        photo: "playerimages/logan.png"
+      },
+      {
+        id: 6,
+        name: "Aiden Bennett",
+        university: "Princeton University (D1)",
+        position: "C",
+        class: "Sr.",
+        height: "6' 0\"",
+        weight: "195 lbs",
+        hometown: "Trenton, NJ",
+        highschool: "Trenton Catholic",
+        photo: "playerimages/aiden.png"
+      },
+      {
+        id: 7,
+        name: "Caleb Jenkins",
+        university: "Princeton University (D1)",
+        position: "IF",
+        class: "So.",
+        height: "5' 11\"",
+        weight: "180 lbs",
+        hometown: "Cherry Hill, NJ",
+        highschool: "Cherry Hill East",
+        photo: "playerimages/caleb.png"
+      },
+      {
+        id: 8,
+        name: "Benjamin Morris",
+        university: "The George Washington University (D1)",
+        position: "P",
+        class: "Fr.",
+        height: "6' 4\"",
+        weight: "215 lbs",
+        hometown: "Hoboken, NJ",
+        highschool: "Bergen Catholic",
+        photo: "playerimages/benjamin.png"
+      }
+  // ... (Add other players here)
+];
+
+// Find the player by ID
+const selectedPlayer = players.find(p => p.id == playerId);
+
+if (!selectedPlayer) {
+    alert("Player not found. Redirecting...");
+    window.location.href = "player_directory.html";
+} else {
+    document.getElementById('profile-img').src = selectedPlayer.photo;
+    document.getElementById('profile-img').alt = selectedPlayer.name;
+    document.getElementById('player-name').textContent = selectedPlayer.name;
+    document.getElementById('player-position').textContent = selectedPlayer.position;
+    document.getElementById('player-highschool').textContent = selectedPlayer.highschool || 'N/A';
+    document.getElementById('player-university').textContent = `${selectedPlayer.university}, Class of ${selectedPlayer.class}`;
+
+    document.getElementById('confirmation-message').textContent = `You scheduled a call with ${selectedPlayer.name}`;
+    document.getElementById('meeting-with-name').textContent = `Meeting with ${selectedPlayer.name}`;
+}
+       
+            // Variables to store selected date and time
+            let selectedDate = null;
+            let selectedTime = null;
+
+            // Generate calendar days
+            const calendarDays = document.getElementById('calendar-days');
+            const timeSlots = document.getElementById('time-slots');
+            const scheduleButton = document.getElementById('schedule-button');
+            const paymentModal = document.getElementById('payment-modal');
+            const closeModal = document.getElementById('close-modal');
+            const payButton = document.getElementById('pay-button');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const closeConfirmation = document.getElementById('close-confirmation');
+            const meetingDateTimeElement = document.getElementById('meeting-date-time');
+            const confirmationDateElement = document.getElementById('confirmation-date');
+            const confirmationTimeElement = document.getElementById('confirmation-time');
+            
+            // Credit card input formatting
+            const cardNumberInput = document.getElementById('card-number');
+            cardNumberInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '')
+                                      .replace(/(\d{4})(?=\d)/g, '$1 ');
+                if (this.value.length > 19) {
+                    this.value = this.value.slice(0, 19);
+                }
+            });
+            
+            const cardExpiryInput = document.getElementById('card-expiry');
+            cardExpiryInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '')
+                                      .replace(/^(\d{2})(\d)/g, '$1/$2')
+                                      .replace(/(\d{2})(\d+)/g, '$1');
+                if (this.value.length > 5) {
+                    this.value = this.value.slice(0, 5);
+                }
+            });
+            
+            const cardCvcInput = document.getElementById('card-cvc');
+            cardCvcInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length > 3) {
+                    this.value = this.value.slice(0, 3);
+                }
+            });
+
+            // Generate a month view for May 2025
+            const generateCalendar = () => {
+                calendarDays.innerHTML = '';
+                // First day of May 2025 
+                const firstDayOfMonth = 4; 
+                const daysInMonth = 31;
+                const today = 1;
+                
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day disabled';
+                    calendarDays.appendChild(emptyDay);
+                }
+                
+                // Add days of the month
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+                    
+                    // Disable past days (for demo purposes, considering days < 15 as "past")
+                    if (day < today) {
+                        dayElement.classList.add('disabled');
+                    } else {
+                        dayElement.addEventListener('click', () => selectDay(day, dayElement));
+                    }
+                    
+                    calendarDays.appendChild(dayElement);
+                }
+            };
+
+            // Function to select a day
+            const selectDay = (day, element) => {
+                // Remove active class from all days
+                const days = document.querySelectorAll('.calendar-day:not(.disabled)');
+                days.forEach(day => day.classList.remove('active'));
+                
+                // Add active class to selected day
+                element.classList.add('active');
+                
+                // Store selected date
+                selectedDate = `May ${day}, 2025`;
+                
+                // Generate time slots for the selected day
+                generateTimeSlots(day);
+            };
+
+            // Function to generate time slots
+            const generateTimeSlots = (day) => {
+                timeSlots.innerHTML = '';
+                selectedTime = null;
+                
+                // Generate time slots (different availability based on day for demo)
+                const slots = day % 2 === 0 ? 
+                    ['9:00 AM', '10:30 AM', '1:00 PM', '3:30 PM', '5:00 PM', '7:30 PM'] : 
+                    ['9:30 AM', '11:00 AM', '2:30 PM', '4:00 PM', '6:30 PM'];
+                
+                slots.forEach(time => {
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+                    
+                    slot.addEventListener('click', () => {
+                        // Remove selected class from all time slots
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        
+                        // Add selected class to this slot
+                        slot.classList.add('selected');
+                        
+                        // Store selected time
+                        selectedTime = time;
+                        
+                        // Update meeting date/time in the payment modal
+                        meetingDateTimeElement.textContent = `${selectedDate} • ${selectedTime}`;
+                    });
+                    
+                    timeSlots.appendChild(slot);
+                });
+            };
+
+            // Schedule button click event
+            scheduleButton.addEventListener('click', () => {
+                if (selectedDate && selectedTime) {
+                    // Update the meeting date and time in the payment modal
+                    meetingDateTimeElement.textContent = `${selectedDate} • ${selectedTime}`;
+                    
+                    // Show payment modal
+                    paymentModal.classList.add('active');
+                } else {
+                    alert('Please select both a date and time for your meeting.');
+                }
+            });
+            
+            // Close modal button click event
+            closeModal.addEventListener('click', () => {
+                paymentModal.classList.remove('active');
+            });
+            
+            // Payment method selection
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    method.classList.add('selected');
+                    method.querySelector('input').checked = true;
+                });
+            });
+            
+            // Pay button click event
+            payButton.addEventListener('click', () => {
+                const cardNumber = document.getElementById('card-number').value;
+                const cardExpiry = document.getElementById('card-expiry').value;
+                const cardCvc = document.getElementById('card-cvc').value;
+                const cardName = document.getElementById('card-name').value;
+                
+                // Simple validation
+                if (!cardNumber || !cardExpiry || !cardCvc || !cardName) {
+                    alert('Please fill in all card details.');
+                    return;
+                }
+                
+                if (cardNumber.replace(/\s/g, '').length < 16) {
+                    alert('Please enter a valid card number.');
+                    return;
+                }
+                
+                // Close payment modal
+                paymentModal.classList.remove('active');
+                
+                // Update confirmation details
+                confirmationDateElement.textContent = selectedDate;
+                confirmationTimeElement.textContent = selectedTime;
+                
+                // Show confirmation modal
+                confirmationModal.classList.add('active');
+            });
+            
+            // Close confirmation button click event
+            closeConfirmation.addEventListener('click', () => {
+                confirmationModal.classList.remove('active');
+            });
+
+
+            // Function to save meeting data to session storage
+function saveMeetingToStorage() {
+    // Get meeting notes
+    const meetingNotes = document.getElementById('meeting-notes').value;
+    
+    // Create meeting object
+    const meeting = {
+        id: `meeting-${Date.now()}`, // Generate unique ID
+        playerName: selectedPlayer.name,
+        playerPhoto: selectedPlayer.photo,
+        playerPosition: selectedPlayer.position,
+        date: selectedDate,
+        time: selectedTime,
+        notes: meetingNotes,
+        status: "Upcoming"
+    };
+    
+    // Get existing meetings or initialize empty array
+    let myMentors = JSON.parse(sessionStorage.getItem('myMentors')) || [];
+    
+    // Add new meeting
+    myMentors.push(meeting);
+    
+    // Save back to session storage
+    sessionStorage.setItem('myMentors', JSON.stringify(myMentors));
+}
+
+// Modify the closeConfirmation event listener to save meeting
+closeConfirmation.addEventListener('click', () => {
+    confirmationModal.classList.remove('active');
+    
+    // Save meeting to session storage
+    saveMeetingToStorage();
+    
+    // Optionally redirect to schedule page
+    window.location.href = "my_schedule.html";
+});
+            
+            // Initialize calendar
+            generateCalendar();
+        ;
+    </script>
+</body>
+</html>

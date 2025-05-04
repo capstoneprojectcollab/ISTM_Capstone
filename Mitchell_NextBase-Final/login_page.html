@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login | NextBase</title>
+    <link rel="stylesheet" href="styles/nextbaseloginstyle.css" />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #afafaf;
+        margin: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 400px;
+        margin: 5% auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 0.5rem;
+        margin-top: 1.5rem;
+      }
+      input,
+      button {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #001f3f;
+        color: white;
+        border: none;
+      }
+      button:hover {
+        background-color: #004080;
+      }
+      .toggle {
+        text-align: center;
+        margin-top: 1rem;
+        cursor: pointer;
+        color: #001f3f;
+        text-decoration: underline;
+      }
+      .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        border-radius: 4px;
+        border: 1px solid #ffffff;
+        background-color: #001f3f;
+
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 14px;
+      }
+
+      .social-btn:hover {
+        background-color: #004080;
+      }
+
+      .social-btn img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="login-section">
+      <div class="login-header">
+        <div class="logo"><img src="logo.png" alt="Logo" height="30" /></div>
+        <h6>
+          NextBase is a platform where high school baseball players can connect
+          with current college players for guidance, recruiting tips, and
+          mentorship.
+        </h6>
+      </div>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <div class="toggle" onclick="toggleForm()">
+        Don't have an account? Register
+      </div>
+      <div class="login-options">
+        <p>Or login with</p>
+        <div class="social-login">
+          <button type="button" class="social-btn" id="googleLogin">
+            <i class="fab fa-google"></i> Google
+          </button>
+          <button type="button" class="social-btn" id="appleLogin">
+            <i class="fab fa-apple"></i> Apple
+          </button>
+        </div>
+      </div>
+      <div class="login-footer">
+        <a href="#" id="forgotPassword">Forgot Password?</a>
+      </div>
+    </div>
+
+    <div class="container" id="register-section" style="display: none">
+      <div class="login-header">
+        <div class="logo"><img src="logo.png" alt="Logo" height="30" /></div>
+        <h6>
+          NextBase is a platform where high school baseball players can connect
+          with current college players for guidance, recruiting tips, and
+          mentorship.
+        </h6>
+      </div>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <input type="text" id="registerName" placeholder="Full Name" required />
+        <input type="email" id="registerEmail" placeholder="Email" required />
+        <input
+          type="password"
+          id="registerPassword"
+          placeholder="Password"
+          required
+        />
+        <input
+          type="password"
+          id="registerPassword"
+          placeholder="Confirm Password"
+          required
+        />
+        
+        <button type="submit">Register</button>
+      </form>
+      <div class="toggle" onclick="toggleForm()">
+        Already have an account? Login
+      </div>
+      <div class="login-options">
+        <p>Or signup with</p>
+        <div class="social-login">
+      
+            <button type="button" class="social-btn" id="googleLogin">
+              <i class="fab fa-google"></i> Google
+            </button>
+          
+          <button type="button" class="social-btn" id="appleLogin">
+            <i class="fab fa-apple"></i> Apple
+          </button>
+        </div>
+      </div>
+      <div class="login-footer">
+        <a href="#" id="forgotPassword">Forgot Password?</a>
+      </div>
+    </div>
+
+    <script>
+      function toggleForm() {
+        const login = document.getElementById("login-section");
+        const register = document.getElementById("register-section");
+        login.style.display = login.style.display === "none" ? "block" : "none";
+        register.style.display =
+          register.style.display === "none" ? "block" : "none";
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const email = document.getElementById("loginEmail").value;
+          const password = document.getElementById("loginPassword").value;
+
+          fetch("login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ email, password }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() === "success") {
+                sessionStorage.setItem("loggedIn", "true");
+                window.location.href = "home_1.html";
+              } else {
+                alert(response);
+              }
+            });
+        });
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const fullName = document.getElementById("registerName").value;
+          const email = document.getElementById("registerEmail").value;
+          const password = document.getElementById("registerPassword").value;
+
+          fetch("register.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              fullName,
+              registerEmail: email,
+              registerPassword: password,
+            }),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() === "success") {
+                alert("Registration successful! Redirecting to player profile form...");
+                window.location.href = "form_to_profile.html";
+              } else {
+                alert(response);
+              }
+            });
+        });
+
+        // Forgot password functionality
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const email = prompt('Please enter your email address to reset your password:');
+                
+                if (email && validateEmail(email)) {
+                    alert(`Password reset instructions have been sent to ${email}`);
+                } else if (email) {
+                    alert('Please enter a valid email address');
+                }
+            });
+      // Social login buttons
+      const socialButtons = document.querySelectorAll("google-login.php");
+      socialButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const provider = this.textContent.trim();
+          alert(
+            `Logging in with ${provider}... This would redirect to the provider's authentication page.`
+          );
+        });
+      });
+    </script>
+    <script>
+      document.getElementById("login-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+      
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+      
+        fetch("login.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        })
+        .then(res => res.text())
+        .then(result => {
+          if (result.trim() === "success") {
+            sessionStorage.setItem("userEmail", email);
+            window.location.href = "profile_page.html"; // or "form_to_profile.html" if new
+          } else {
+            alert("Login failed. Please check your email and password.");
+          }
+        })
+        .catch(err => {
+          console.error("Login error:", err);
+          alert("Error logging in.");
+        });
+      });
+      </script>
+      
+  </body>
+</html>

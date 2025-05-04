@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule Session | NextBase</title>
+    <link rel="stylesheet" href="styles/schedulestyle.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="NextBase Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="home_1.html">Home</a></li>
+          <li><a href="recruiting-feedback.html">Recruiting Feedback</a></li>
+          <li><a href="my_schedule.html">My Schedule</a></li>
+          <li><a href="profile_page.html" class="active">My Profile</a></li>
+          <li><a href="player_directory.html">Player Hub</a></li>
+          <!-- <li><a href="#about">About Us</a></li>
+              <li><a href="#contact">Contact</a></li> -->
+          <li><a href="home.html">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="schedule-page">
+      <div class="player-schedule-card">
+        <img id="playerImage" src="" alt="Player Photo" />
+        <h1 id="playerName">Loading...</h1>
+        <p id="playerPosition"></p>
+        <p id="playerGrade"></p>
+        <p id="playerWeight"></p>
+        <p id="playerSchoolLocation"></p>
+
+        <button onclick="alert('Session booking coming soon!')">
+          Schedule a Session
+        </button>
+        <br /><br />
+        <button onclick="window.location.href='playerhub.html'">
+          Back to Player Hub
+        </button>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const name = sessionStorage.getItem("selectedPlayer");
+        const position = sessionStorage.getItem("playerPosition");
+        const grade = sessionStorage.getItem("playerGrade");
+        const weight = sessionStorage.getItem("playerWeight");
+        const school = sessionStorage.getItem("playerSchool");
+        const location = sessionStorage.getItem("playerLocation");
+        const image =
+          sessionStorage.getItem("playerImage") || "playerimages/default.png";
+
+        document.getElementById("playerName").textContent =
+          name || "Unknown Player";
+        document.getElementById("playerPosition").textContent = position
+          ? `Position: ${position}`
+          : "";
+        document.getElementById("playerGrade").textContent = grade
+          ? `Grade: ${grade}`
+          : "";
+        document.getElementById("playerWeight").textContent = weight
+          ? `Weight: ${weight}`
+          : "";
+        document.getElementById("playerSchoolLocation").textContent =
+          school && location ? `${school} | ${location}` : "";
+        document.getElementById("playerImage").src = image;
+        document.getElementById("playerImage").alt = name;
+      });
+    </script>
+  </body>
+</html>

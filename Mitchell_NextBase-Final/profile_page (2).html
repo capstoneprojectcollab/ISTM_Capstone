@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextBase - My Profile</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #082567;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo img {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #4aa9e6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+        
+        /* Profile Sections */
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #082567;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 32px;
+            color: #082567;
+            margin-bottom: 5px;
+        }
+        
+        .profile-position {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            padding: 8px 15px;
+            background-color: #f0f6ff;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #082567;
+        }
+        
+        .profile-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .profile-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #082567;
+            color: white;
+        }
+        
+        .btn-outlined {
+            border: 2px solid #082567;
+            color: #082567;
+        }
+        
+        .btn-primary:hover {
+            background-color: #061a4c;
+        }
+        
+        .btn-outlined:hover {
+            background-color: #f0f6ff;
+        }
+        
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #082567;
+            font-size: 22px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-link {
+            color: #082567;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+        
+        .social-link:hover {
+            color: #4aa9e6;
+        }
+        
+        .player-statement {
+            line-height: 1.6;
+            color: #444;
+        }
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .story-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .story-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .story-content {
+            padding: 15px;
+        }
+        
+        .story-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #082567;
+        }
+        
+        .story-answer {
+            color: #444;
+            line-height: 1.5;
+        }
+        
+        /* Availability Section */
+        .availability-section {
+            margin-top: 30px;
+        }
+        
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .day-column {
+            text-align: center;
+        }
+        
+        .day-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #082567;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .time-slot {
+            padding: 5px;
+            margin-bottom: 5px;
+            background-color: #e8f4ff;
+            border-radius: 3px;
+        }
+        
+        .edit-profile-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #f0f6ff;
+            border: 1px solid #082567;
+            color: #082567;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .edit-profile-btn:hover {
+            background-color: #d0e1ff;
+        }
+        
+        .profile-container {
+            position: relative;
+        }
+        
+        .empty-message {
+            color: #888;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-buttons {
+                justify-content: center;
+            }
+            
+            .availability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="NextBase Logo" />
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home_1.html">Home</a></li>
+                <li><a href="recruiting-feedback.html">Recruiting Feedback</a></li>
+                <li><a href="my_schedule.html">My Schedule</a></li>
+                <li><a href="profile_page.html" class="active">My Profile</a></li>
+                <li><a href="player_directory.html">Player Hub</a></li>
+                <li><a href="home.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="content profile-container">
+            <a href="form_to_profile.html" class="edit-profile-btn" onclick="prepareEdit()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+            
+            <div id="profile-content">
+                <!-- Profile content will be loaded here dynamically -->
+                <div class="text-center" style="padding: 50px;">
+                    <h2>Loading profile data...</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    console.log('Profile page loaded');
+    
+    // Try to retrieve the profile data from sessionStorage
+    const profileDataString = sessionStorage.getItem('playerProfileData');
+    
+    if (profileDataString) {
+        try {
+            // Parse the data and build the profile
+            const profileData = JSON.parse(profileDataString);
+            buildProfileContent(profileData);
+        } catch (error) {
+            console.error('Error parsing profile data:', error);
+            showNoProfileMessage();
+        }
+    } else {
+        // No profile data found
+        showNoProfileMessage();
+    }
+});
+
+function showNoProfileMessage() {
+    document.getElementById('profile-content').innerHTML = 
+        '<div class="text-center" style="padding: 50px;">' +
+        '<h2>No Profile Data Found</h2>' +
+        '<p>Please complete your profile information first.</p>' +
+        '<a href="form_to_profile.html" class="profile-btn btn-primary" style="display: inline-block; margin-top: 20px;">Create Profile</a>' +
+        '</div>';
+}
+
+function buildProfileContent(data) {
+    let content = `
+        <div class="profile-header">
+            <div id="profile-image-container">
+                <img src="${data.profileImage || '/api/placeholder/400/400'}" alt="Profile Picture" class="profile-image">
+            </div>
+            
+            <div class="profile-info">
+                <h1 class="profile-name">${data.fullName || 'Name Not Provided'}</h1>
+                <h2 class="profile-position">${data.email || 'Email Not Provided'}</h2>
+                <h2 class="profile-position">${data.position || 'Position Not Provided'}</h2>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">${data.school || 'School Not Provided'}</div>
+                    <div class="stat-item">Class of ${data.graduationYear || 'Year Not Provided'}</div>
+                    <div class="stat-item">${data.location || 'Location Not Provided'}</div>
+                    <div class="stat-item">${data.handedness || 'Handedness Not Provided'}</div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3 class="section-title">Personal Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Height</div>
+                    <div class="info-value">${data.height || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Weight</div>
+                    <div class="info-value">${data.weight ? data.weight + ' lbs' : 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Date of Birth</div>
+                    <div class="info-value">${formatDate(data.dateOfBirth) || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Hometown</div>
+                    <div class="info-value">${data.location || 'Not provided'}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3 class="section-title">Academic Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">School/University</div>
+                    <div class="info-value">${data.school || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Class of</div>
+                    <div class="info-value">${data.graduationYear || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">GPA</div>
+                    <div class="info-value">${data.gpa || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Major</div>
+                    <div class="info-value">${data.major || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Minor</div>
+                    <div class="info-value">${data.minor || 'Not provided'}</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Player Statement (only display if provided)
+    if (data.playerStatement) {
+        content += `
+            <div class="profile-section">
+                <h3 class="section-title">Player Statement</h3>
+                <p class="player-statement">${data.playerStatement}</p>
+            </div>
+        `;
+    }
+    
+    // Team Information (only display if at least one field is filled)
+    if (data.travelteam || data.clubteam) {
+        content += `
+            <div class="profile-section">
+                <h3 class="section-title">Team Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Travel Team</div>
+                        <div class="info-value">${data.travelteam || 'Not provided'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Club Team</div>
+                        <div class="info-value">${data.clubteam || 'Not provided'}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Social Media & Links (only display if at least one field is filled)
+    if (data.instagram || data.twitter || data.facebook || data.youtube || data.highlightReel) {
+        content += `
+            <div class="profile-section">
+                <h3 class="section-title">Connect With Me</h3>
+                <div class="info-grid">
+        `;
+        
+        // Only add social media section if at least one social media field is filled
+        if (data.instagram || data.twitter || data.facebook || data.youtube) {
+            content += `
+                <div class="info-item">
+                    <div class="info-label">Social Media</div>
+                    <div class="social-links">
+            `;
+            
+            if (data.instagram) {
+                content += `
+                    <a href="https://instagram.com/${data.instagram}" class="social-link" title="Instagram" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                `;
+            }
+            
+            if (data.twitter) {
+                content += `
+                    <a href="https://twitter.com/${data.twitter}" class="social-link" title="Twitter" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                `;
+            }
+            
+            if (data.facebook) {
+                content += `
+                    <a href="${data.facebook}" class="social-link" title="Facebook" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                `;
+            }
+            
+            if (data.youtube) {
+                content += `
+                    <a href="${data.youtube}" class="social-link" title="YouTube" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                `;
+            }
+            
+            content += `
+                    </div>
+                </div>
+            `;
+        }
+        
+        if (data.highlightReel) {
+            content += `
+                <div class="info-item">
+                    <div class="info-label">Highlight Reel</div>
+                    <div class="info-value">
+                        <a href="${data.highlightReel}" target="_blank">Watch My Highlights</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        content += `
+                </div>
+            </div>
+        `;
+    }
+    
+    // Stories Section (only display if at least one story is provided)
+    if (data.story1 || data.story2 || data.story3 || data.story4) {
+        content += `
+            <div class="profile-section">
+                <h3 class="section-title">My Baseball Story</h3>
+                <div class="stories-grid">
+        `;
+        
+        // Story 1
+        if (data.story1) {
+            content += `
+                <div class="story-card">
+                    <img src="${data.story1Image || '/api/placeholder/400/320'}" alt="Story Image" class="story-image">
+                    <div class="story-content">
+                        <div class="story-question">What made you choose this program?</div>
+                        <p class="story-answer">${data.story1}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Story 2
+        if (data.story2) {
+            content += `
+                <div class="story-card">
+                    <img src="${data.story2Image || '/api/placeholder/400/320'}" alt="Story Image" class="story-image">
+                    <div class="story-content">
+                        <div class="story-question">What's one thing you do on game day?</div>
+                        <p class="story-answer">${data.story2}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Story 3
+        if (data.story3) {
+            content += `
+                <div class="story-card">
+                    <img src="${data.story3Image || '/api/placeholder/400/320'}" alt="Story Image" class="story-image">
+                    <div class="story-content">
+                        <div class="story-question">What does a typical day look like for you as an athlete?</div>
+                        <p class="story-answer">${data.story3}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Story 4
+        if (data.story4) {
+            content += `
+                <div class="story-card">
+                    <img src="${data.story4Image || '/api/placeholder/400/320'}" alt="Story Image" class="story-image">
+                    <div class="story-content">
+                        <div class="story-question">What's your favorite baseball memory?</div>
+                        <p class="story-answer">${data.story4}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        content += `
+                </div>
+            </div>
+        `;
+    }
+    
+    // Availability Section (display if data exists)
+const availabilityData = sessionStorage.getItem('playerAvailabilityData');
+if (availabilityData) {
+    const availability = JSON.parse(availabilityData);
+    content += `
+        <div class="profile-section availability-section">
+            <h3 class="section-title">My Availability</h3>
+            <div class="availability-grid">
+    `;
+    
+    // Days of the week
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    // Generate columns for each day
+    days.forEach(day => {
+        content += `
+            <div class="day-column">
+                <div class="day-name">${day}</div>
+        `;
+        
+        // Check if this day has any time slots
+        if (availability[day] && availability[day].length > 0) {
+            availability[day].forEach(slot => {
+                content += `
+                    <div class="time-slot">
+                        ${slot.start} - ${slot.end}
+                    </div>
+                `;
+            });
+        } else {
+            content += `<div class="empty-message">Not available</div>`;
+        }
+        
+        content += `</div>`;
+    });
+    
+    content += `
+            </div>
+            <div class="text-center" style="margin-top: 20px;">
+                <a href="form_to_profile.html" class="profile-btn btn-outlined">
+                    <i class="fas fa-edit"></i> Edit Availability
+                </a>
+            </div>
+        </div>
+    `;
+} else {
+    // No availability data
+    content += `
+        <div class="profile-section availability-section">
+            <h3 class="section-title">My Availability</h3>
+            <p>Set your availability for mentorship sessions:</p>
+            <div class="text-center" style="margin-top: 20px;">
+                <a href="mentorship_availability_schedule.html" class="profile-btn btn-primary">
+                    <i class="fas fa-calendar-plus"></i> Set Your Availability
+                </a>
+            </div>
+        </div>
+    `;
+}
+    
+    // Set the content
+    document.getElementById('profile-content').innerHTML = content;
+    console.log('Profile content built and inserted into DOM');
+}
+
+// Helper function to format date
+function formatDate(dateString) {
+    if (!dateString) return null;
+    
+    try {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    } catch (error) {
+        console.error('Error formatting date:', error);
+        return dateString; // Return the original string if formatting fails
+    }
+}
+    </script>
+</body>
+
+</html>
+<script>
+    function prepareEdit() {
+        const profileData = sessionStorage.getItem('playerProfileData');
+        const availability = sessionStorage.getItem('playerAvailabilityData');
+        if (profileData) {
+            sessionStorage.setItem('editMode', 'true');
+        }
+    }
+    </script>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextBase - Player Directory</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #082567;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo img {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #4aa9e6;
+        }
+
+        .intro-message {
+            background-color: white;
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 4px;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .filter-sidebar {
+            width: 180px;
+            margin-right: 20px;
+        }
+
+        .filter-heading {
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .filter-menu {
+            display: none;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+
+        .filter-menu.active {
+            display: block;
+        }
+
+        .filter-option {
+            margin-bottom: 8px;
+        }
+
+        .filter-option label {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .player-list {
+            flex: 1;
+        }
+
+        .player-card {
+            display: flex;
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .player-number {
+            width: 40px;
+            height: 40px;
+            background-color: #4b9cd3;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .player-photo {
+            padding: 10px;
+        }
+
+        .player-photo img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .player-info {
+            flex: 1;
+            padding: 15px 10px;
+            border-right: 1px solid #eee;
+        }
+
+        .player-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .player-university {
+            color: #082567;
+            margin-bottom: 5px;
+        }
+
+        .player-stats {
+            display: flex;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .player-stats div {
+            margin-right: 15px;
+        }
+
+        .player-location {
+            display: flex;
+            color: #666;
+            align-items: center;
+        }
+
+        .player-location .dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .player-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 15px;
+            min-width: 130px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 5px 0;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #0b47a1;
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #4b9cd3;
+            color: white;
+            border: none;
+        }
+
+        .apply-filter {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+          <img src="logo.png" alt="NextBase Logo" />
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home_1.html">Home</a></li>
+            <li><a href="recruiting-feedback.html">Recruiting Feedback</a></li>
+            <li><a href="my_schedule.html">My Schedule</a></li>
+            <li><a href="profile_page.html">My Profile</a></li>
+            <li><a href="player_directory.html">Player Hub</a></li>
+            <li><a href="home.html">Sign Out</a></li>
+          </ul>
+        </nav>
+      </header>
+
+    <div class="intro-message">
+        Find and connect with baseball players from various universities and high schools.
+    </div>
+
+    <div class="container">
+        <div class="filter-sidebar">
+            <h3 class="filter-heading">Filter by:</h3>
+            <button class="filter-btn" data-filter="university">University</button>
+            <div class="filter-menu" id="university-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="gwu" value="The George Washington University (D1)">
+                    <label for="gwu">George Washington (D1)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="rutgers" value="Rutgers University (D1)">
+                    <label for="rutgers">Rutgers University (D1)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="princeton" value="Princeton University (D1)">
+                    <label for="princeton">Princeton University (D1)</label>
+                </div>
+                <button class="apply-filter" data-type="university">Apply Filter</button>
+            </div>
+
+            <button class="filter-btn" data-filter="position">Position</button>
+            <div class="filter-menu" id="position-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="of" value="OF">
+                    <label for="of">Outfield (OF)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="if" value="IF">
+                    <label for="if">Infield (IF)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="p" value="P">
+                    <label for="p">Pitcher (P)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="c" value="C">
+                    <label for="c">Catcher (C)</label>
+                </div>
+                <button class="apply-filter" data-type="position">Apply Filter</button>
+            </div>
+
+            <button class="filter-btn" data-filter="class">Class</button>
+            <div class="filter-menu" id="class-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="fr" value="Fr.">
+                    <label for="fr">Freshman (Fr.)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="so" value="So.">
+                    <label for="so">Sophomore (So.)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="jr" value="Jr.">
+                    <label for="jr">Junior (Jr.)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="sr" value="Sr.">
+                    <label for="sr">Senior (Sr.)</label>
+                </div>
+                <button class="apply-filter" data-type="class">Apply Filter</button>
+            </div>
+
+            <button class="filter-btn" data-filter="highschool">School Team</button>
+            <div class="filter-menu" id="highschool-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="donovan" value="Donovan Catholic">
+                    <label for="donovan">Donovan Catholic</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="manhattanland" value="Manhattanland">
+                    <label for="manhattanland">Manhattanland</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="morris" value="Morris Knolls">
+                    <label for="morris">Morris Knolls</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="bergen" value="Bergen Catholic">
+                    <label for="bergen">Bergen Catholic</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="edison" value="Edison High">
+                    <label for="edison">Edison High</label>
+                </div>
+                <button class="apply-filter" data-type="highschool">Apply Filter</button>
+            </div>
+
+            <button class="filter-btn" data-filter="hometown">Hometown</button>
+            <div class="filter-menu" id="hometown-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="island" value="Island Heights, NJ">
+                    <label for="island">Island Heights, NJ</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="lyndhurst" value="Lyndhurst, NJ">
+                    <label for="lyndhurst">Lyndhurst, NJ</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="denville" value="Denville, NJ">
+                    <label for="denville">Denville, NJ</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="princeton-nj" value="Princeton, NJ">
+                    <label for="princeton-nj">Princeton, NJ</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="edison-nj" value="Edison, NJ">
+                    <label for="edison-nj">Edison, NJ</label>
+                </div>
+                <button class="apply-filter" data-type="hometown">Apply Filter</button>
+            </div>
+            
+            <!-- New Recruiting Services Filter -->
+            <button class="filter-btn highlight" data-filter="recruitingServices">Recruiting Services Used</button>
+            <div class="filter-menu" id="recruitingServices-filter">
+                <div class="filter-option">
+                    <input type="checkbox" id="ncsa" value="NCSA">
+                    <label for="ncsa">NCSA</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="fieldlevel" value="FieldLevel">
+                    <label for="fieldlevel">FieldLevel</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="captainu" value="CaptainU">
+                    <label for="captainu">CaptainU</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="hudl" value="Hudl">
+                    <label for="hudl">Hudl</label>
+                </div>
+                <button class="apply-filter" data-type="recruitingServices">Apply Filter</button>
+            </div>
+        </div>
+
+        <div class="player-list" id="player-list">
+            
+        </div>
+    </div>
+
+    <script>
+        // Player data with added recruitingServices field
+        const players = [
+      {
+        id: 1,
+        name: "Liam Peterson",
+        university: "The George Washington University (D1)",
+        position: "OF",
+        class: "Sr.",
+        height: "5' 11\"",
+        weight: "185 lbs",
+        hometown: "Island Heights, NJ",
+        highschool: "Donovan Catholic",
+        photo: "playerimages/liam.png",
+        recruitingServices: ["NCSA", "FieldLevel"]
+      },
+      {
+        id: 2,
+        name: "Noah Reynolds",
+        university: "The George Washington University (D1)",
+        position: "OF",
+        class: "Jr.",
+        height: "6' 1\"",
+        weight: "200 lbs",
+        hometown: "Lyndhurst, NJ",
+        highschool: "Manhattanland",
+        photo: "playerimages/noah.png",
+        recruitingServices: ["FieldLevel"]
+      },
+      {
+        id: 3,
+        name: "Elijah Brooks",
+        university: "The George Washington University (D1)",
+        position: "OF",
+        class: "Fr.",
+        height: "6' 1\"",
+        weight: "200 lbs",
+        hometown: "Denville, NJ",
+        highschool: "Morris Knolls",
+        photo: "playerimages/elijah.png",
+        recruitingServices: ["NCSA", "Hudl"]
+      },
+      {
+        id: 4,
+        name: "Mason Rivera",
+        university: "Rutgers University (D1)",
+        position: "IF",
+        class: "So.",
+        height: "5' 10\"",
+        weight: "175 lbs",
+        hometown: "Edison, NJ",
+        highschool: "Edison High",
+        photo: "playerimages/mason.png",
+        recruitingServices: ["CaptainU"]
+      },
+      {
+        id: 5,
+        name: "Logan Sanders",
+        university: "Rutgers University (D1)",
+        position: "P",
+        class: "Jr.",
+        height: "6' 3\"",
+        weight: "210 lbs",
+        hometown: "Princeton, NJ",
+        highschool: "Princeton High",
+        photo: "playerimages/logan.png",
+        recruitingServices: ["NCSA", "CaptainU"]
+      },
+      {
+        id: 6,
+        name: "Aiden Bennett",
+        university: "Princeton University (D1)",
+        position: "C",
+        class: "Sr.",
+        height: "6' 0\"",
+        weight: "195 lbs",
+        hometown: "Trenton, NJ",
+        highschool: "Trenton Catholic",
+        photo: "playerimages/aiden.png",
+        recruitingServices: ["Hudl", "FieldLevel"]
+      },
+      {
+        id: 7,
+        name: "Caleb Jenkins",
+        university: "Princeton University (D1)",
+        position: "IF",
+        class: "So.",
+        height: "5' 11\"",
+        weight: "180 lbs",
+        hometown: "Cherry Hill, NJ",
+        highschool: "Cherry Hill East",
+        photo: "playerimages/caleb.png",
+        recruitingServices: ["CaptainU", "Hudl"]
+      },
+      {
+        id: 8,
+        name: "Benjamin Morris",
+        university: "The George Washington University (D1)",
+        position: "P",
+        class: "Fr.",
+        height: "6' 4\"",
+        weight: "215 lbs",
+        hometown: "Hoboken, NJ",
+        highschool: "Bergen Catholic",
+        photo: "playerimages/benjamin.png",
+        recruitingServices: ["NCSA", "FieldLevel", "CaptainU"]
+      }
+    ];
+
+
+        // Active filters
+        const activeFilters = {
+            university: [],
+            position: [],
+            class: [],
+            highschool: [],
+            hometown: [],
+            recruitingServices: []
+        };
+
+        // Function to render player cards
+        function renderPlayers(filteredPlayers = players) {
+            const playerList = document.getElementById('player-list');
+            playerList.innerHTML = '';
+
+            filteredPlayers.forEach(player => {
+                const playerCard = document.createElement('div');
+                playerCard.className = 'player-card';
+                
+                // Creating recruiting services display text
+                const recruitingServicesText = player.recruitingServices ? 
+                    `<div style="margin-top: 5px; font-size: 12px; color: #777;">Recruiting: ${player.recruitingServices.join(', ')}</div>` : '';
+                
+                playerCard.innerHTML = `
+                    <div class="player-number">${player.id}</div>
+                    <div class="player-photo">
+                        <img src="${player.photo}" alt="${player.name}">
+                    </div>
+                    <div class="player-info">
+                        <h3 class="player-name">${player.name}</h3>
+                        <div class="player-university">${player.university}</div>
+                        <div class="player-stats">
+                            <div>${player.position}</div>
+                            <div>${player.class}</div>
+                            <div>${player.height}</div>
+                            <div>${player.weight}</div>
+                        </div>
+                        <div class="player-location">
+                            <div class="dot"></div>
+                            <div>
+                                <div>${player.hometown}</div>
+                                <div>${player.highschool}</div>
+                                ${recruitingServicesText}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-actions">
+                        <a href="baseball_schedule.html?id=${player.id}" class="btn btn-primary">Schedule</a>
+                        <a href="#" class="btn btn-secondary">View Profile</a>
+                    </div>
+                `;
+                playerList.appendChild(playerCard);
+            });
+
+            // Reattach event listeners to the new buttons
+            attachButtonEventListeners();
+        }
+
+        // Function to apply filters
+        function applyFilters() {
+            // If no filters are active, show all players
+            const hasActiveFilters = Object.values(activeFilters).some(filters => filters.length > 0);
+            
+            if (!hasActiveFilters) {
+                renderPlayers();
+                return;
+            }
+
+            // Filter players based on active filters
+            const filteredPlayers = players.filter(player => {
+                // For each filter category
+                for (const [category, values] of Object.entries(activeFilters)) {
+                    // If this category has active filters
+                    if (values.length > 0) {
+                        // For university, position, class
+                        if (category === 'university' || category === 'position' || category === 'class') {
+                            if (!values.includes(player[category])) {
+                                return false;
+                            }
+                        }
+                        // For hometown and highschool
+                        else if (category === 'hometown' || category === 'highschool') {
+                            if (!values.includes(player[category])) {
+                                return false;
+                            }
+                        }
+                        // For recruitingServices (which is an array)
+                        else if (category === 'recruitingServices') {
+                            // Check if at least one selected service is used by the player
+                            const hasService = values.some(service => 
+                                player.recruitingServices && player.recruitingServices.includes(service)
+                            );
+                            if (!hasService) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            });
+
+            renderPlayers(filteredPlayers);
+        }
+
+        // Function to attach event listeners to buttons
+        function attachButtonEventListeners() {
+            // Schedule button functionality
+            const scheduleButtons = document.querySelectorAll('.btn-primary');
+            scheduleButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const playerCard = this.closest('.player-card');
+                    const playerName = playerCard.querySelector('.player-name').textContent;
+                    const player = players.find(p => p.name === playerName);
+
+                    if (player) {
+                        window.location.href = `baseball_schedule.html?id=${player.id}`;
+                    }
+                });
+            });
+
+            // View profile button functionality
+            const profileButtons = document.querySelectorAll('.btn-secondary');
+            profileButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const playerCard = this.closest('.player-card');
+                    const playerName = playerCard.querySelector('.player-name').textContent;
+                    const player = players.find(p => p.name === playerName);
+
+                    if (player) {
+                        window.location.href = `player-profile-page.html?id=${player.id}`;
+                    }
+                });
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show filter options when filter button is clicked
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter');
+                    const filterMenu = document.getElementById(`${filterType}-filter`);
+                    
+                    // Close all other filter menus
+                    document.querySelectorAll('.filter-menu').forEach(menu => {
+                        if (menu !== filterMenu) {
+                            menu.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle this filter menu
+                    filterMenu.classList.toggle('active');
+                });
+            });
+
+            // Apply filter button functionality
+            const applyFilterButtons = document.querySelectorAll('.apply-filter');
+            applyFilterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-type');
+                    const checkboxes = document.querySelectorAll(`#${filterType}-filter input[type="checkbox"]:checked`);
+                    
+                    // Clear previous filters for this type
+                    activeFilters[filterType] = [];
+                    
+                    // Add checked values to active filters
+                    checkboxes.forEach(checkbox => {
+                        activeFilters[filterType].push(checkbox.value);
+                    });
+                    
+                    // Apply filters and close the menu
+                    applyFilters();
+                    document.getElementById(`${filterType}-filter`).classList.remove('active');
+                });
+            });
+
+            // Auto-open the Recruiting Services filter menu since it's new
+            setTimeout(() => {
+                document.querySelector('.filter-btn[data-filter="recruitingServices"]').click();
+            }, 500);
+
+            // Initialize the player list
+            renderPlayers();
+        });
+    </script>
+</body>
+</html>

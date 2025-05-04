@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextBase - Player Information Form</title>
+    <link rel="icon" type="image/png" href="icon.png" />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #f5f5f5;
+      }
+
+      header {
+        background-color: #082567;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      header .logo img {
+        height: 50px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        list-style: none;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #4aa9e6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 30px auto;
+      }
+
+      /* Content Sections */
+      .content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      /* Form Styling */
+      .form-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .form-section {
+        flex: 1 1 400px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        color: #0a2250;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      textarea {
+        min-height: 100px;
+      }
+
+      .required {
+        color: #ff4d4d;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: #0a2250;
+        color: white;
+      }
+
+      .btn-success {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .submit-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      /* Upload styling */
+      .image-upload {
+        border: 2px dashed #ddd;
+        border-radius: 4px;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+
+      .image-upload i {
+        font-size: 40px;
+        color: #aaa;
+        margin-bottom: 10px;
+      }
+
+      .upload-text {
+        color: #777;
+      }
+
+      /* Stories Section */
+      .stories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .story-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .story-image {
+        height: 160px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .story-content {
+        padding: 15px;
+      }
+
+      .story-question {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #0a2250;
+      }
+
+      /* Helper classes */
+      .mb-20 {
+        margin-bottom: 20px;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Feedback message */
+      .feedback-message {
+        background-color: #dff0d8;
+        color: #3c763d;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      /* Availability Section Styles */
+      .day-container {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .day-header {
+        display: flex;
+        align-items: center;
+        width: 120px;
+        flex-shrink: 0;
+      }
+
+      .day-name {
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      .day-checkbox {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        position: relative;
+        appearance: none;
+        background-color: white;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .day-checkbox:checked {
+        background-color: #4caf50;
+        border-color: #4caf50;
+      }
+
+      .day-checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 14px;
+      }
+
+      .day-checkbox:not(:checked) ~ .time-slots {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .time-slots {
+        flex-grow: 1;
+        transition: opacity 0.3s;
+      }
+
+      .time-slot {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        position: relative;
+      }
+
+      .time-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .time-label {
+        width: 60px;
+        font-size: 14px;
+      }
+
+      .remove-slot-btn {
+        background-color: #ff5252;
+        color: white;
+        border: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .add-slot-btn {
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px auto;
+      }
+
+      .disabled {
+        background-color: #ff5252;
+        border-color: #ff5252;
+      }
+
+      .section-header {
+        padding: 10px 0;
+        margin: 20px 0;
+        border-bottom: 1px solid #e0e0e0;
+        color: #0a2250;
+        font-size: 24px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="NextBase Logo" />
+      </div>
+      <nav>
+        <ul>
+          <!-- <li><a href="home_1.html">Home</a></li>
+          <li><a href="my_schedule.html">My Schedule</a></li>
+          <li><a href="profile_page.html">My Profile</a></li>
+          <li><a href="player_directory.html">Player Hub</a></li> -->
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="home.html">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="content">
+        <div id="feedback-message" class="feedback-message">
+          Your profile has been created successfully!
+          <a href="profile_page.html">View your profile</a>
+        </div>
+
+        <h2>NextBase Baseball Player Profile Form</h2>
+        <p class="mb-20">
+          Enter your information to generate your profile page and make it
+          easier for colleges to connect with you.
+        </p>
+
+        <form
+          id="player-form"
+          method="POST"
+          action="submit_profile.php"
+          enctype="multipart/form-data"
+        >
+          <div class="form-container">
+            <!-- Personal Information Section -->
+            <div class="form-section">
+              <h3>Personal Information</h3>
+              <div class="form-group">
+                <label for="fullName"
+                  >Full Name <span class="required">*</span></label
+                >
+                <input type="text" id="fullName" name="fullName" required />
+              </div>
+              <div class="form-group">
+                <label for="email"
+                  >Email <span class="required">*</span></label
+                >
+                <input type="text" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="position"
+                  >Position <span class="required">*</span></label
+                >
+                <input type="text" id="position" name="position" required />
+              </div>
+
+              <div class="form-group">
+                <label for="handedness"
+                  >Handedness <span class="required">*</span></label
+                >
+                <select id="handedness" name="handedness" required>
+                  <option value="">Select...</option>
+                  <option value="Right-Handed">Right-Handed</option>
+                  <option value="Left-Handed">Left-Handed</option>
+                  <option value="Switch Hitter">Switch Hitter</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="dateOfBirth"
+                  >Date of Birth <span class="required">*</span></label
+                >
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="location"
+                  >Hometown <span class="required">*</span></label
+                >
+                <input type="text" id="location" name="location" required />
+              </div>
+
+              <div class="form-group">
+                <label for="height"
+                  >Height (ft, in) <span class="required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="height"
+                  name="height"
+                  placeholder="e.g. 6'2&quot;"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="weight"
+                  >Weight (lbs) <span class="required">*</span></label
+                >
+                <input type="number" id="weight" name="weight" required />
+              </div>
+
+              <div class="form-group">
+                <label for="profilePicture">Profile Picture</label>
+                <div class="image-upload" id="profile-upload">
+                  <i class="fas fa-upload"></i>
+                  <div class="upload-text">
+                    Click to upload your profile picture
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  id="profilePicture"
+                  name="profilePicture"
+                  accept="image/*"
+                  class="hidden"
+                />
+              </div>
+            </div>
+
+            <!-- School Information Section -->
+            <div class="form-section">
+              <h3>School Information</h3>
+              <div class="form-group">
+                <label for="school"
+                  >School/University <span class="required">*</span></label
+                >
+                <input type="text" id="school" name="school" required />
+              </div>
+
+              <div class="form-group">
+                <label for="graduationYear"
+                  >Class of (Year) <span class="required">*</span></label
+                >
+                <input
+                  type="number"
+                  id="graduationYear"
+                  name="graduationYear"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="gpa">GPA <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="gpa"
+                  name="gpa"
+                  placeholder="e.g. 3.7"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="major">Major <span class="required">*</span></label>
+                <input type="text" id="major" name="major" required />
+              </div>
+
+              <div class="form-group">
+                <label for="minor">Minor</label>
+                <input type="text" id="minor" name="minor" />
+              </div>
+
+              <div class="form-group">
+                <label for="travelteam">Travel team</label>
+                <input type="text" id="travelteam" name="travelteam" />
+              </div>
+
+              <div class="form-group">
+                <label for="clubteam">Club team</label>
+                <input type="text" id="clubteam" name="clubteam" />
+              </div>
+            </div>
+
+            <!-- Social Media & Links Section -->
+            <div class="form-section">
+              <h3>Social Media & Links</h3>
+              <div class="form-group">
+                <label for="instagram">Instagram</label>
+                <input
+                  type="text"
+                  id="instagram"
+                  name="instagram"
+                  placeholder="Username"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="twitter">Twitter</label>
+                <input
+                  type="text"
+                  id="twitter"
+                  name="twitter"
+                  placeholder="Username"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="facebook">Facebook</label>
+                <input
+                  type="text"
+                  id="facebook"
+                  name="facebook"
+                  placeholder="Profile URL"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="youtube">YouTube</label>
+                <input
+                  type="text"
+                  id="youtube"
+                  name="youtube"
+                  placeholder="Channel URL"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="highlightReel">Highlight Reel URL</label>
+                <input
+                  type="text"
+                  id="highlightReel"
+                  name="highlightReel"
+                  placeholder="e.g. YouTube or Hudl link"
+                />
+              </div>
+            </div>
+
+            <!-- Player Statement Section -->
+            <div class="form-section">
+              <h3>Player Statement</h3>
+              <div class="form-group">
+                <label for="playerStatement"
+                  >Your Player Statement (Achievements, Statistics, etc.)</label
+                >
+                <textarea
+                  id="playerStatement"
+                  name="playerStatement"
+                  placeholder="Describe your athletic achievements, statistics, awards, etc."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stories Section -->
+          <h3 class="mb-20">Your Baseball Story</h3>
+          <p class="mb-20">
+            Share your journey to help colleges understand your passion and
+            commitment to baseball.
+          </p>
+
+          <div class="stories-grid mb-20">
+            <div class="story-card">
+              <div class="story-image" id="story1-upload">
+                <i class="fas fa-camera"></i>
+                <p>Upload Image</p>
+              </div>
+              <input
+                type="file"
+                id="story1Image"
+                name="story1Image"
+                accept="image/*"
+                class="hidden"
+              />
+              <div class="story-content">
+                <div class="story-question">
+                  What made you choose this program?
+                </div>
+                <textarea id="story1" name="story1"></textarea>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-image" id="story2-upload">
+                <i class="fas fa-camera"></i>
+                <p>Upload Image</p>
+              </div>
+              <input
+                type="file"
+                id="story2Image"
+                name="story2Image"
+                accept="image/*"
+                class="hidden"
+              />
+              <div class="story-content">
+                <div class="story-question">
+                  What's one thing you do on game day?
+                </div>
+                <textarea id="story2" name="story2"></textarea>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-image" id="story3-upload">
+                <i class="fas fa-camera"></i>
+                <p>Upload Image</p>
+              </div>
+              <input
+                type="file"
+                id="story3Image"
+                name="story3Image"
+                accept="image/*"
+                class="hidden"
+              />
+              <div class="story-content">
+                <div class="story-question">
+                  What does a typical day look like for you as an athlete?
+                </div>
+                <textarea id="story3" name="story3"></textarea>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-image" id="story4-upload">
+                <i class="fas fa-camera"></i>
+                <p>Upload Image</p>
+              </div>
+              <input
+                type="file"
+                id="story4Image"
+                name="story4Image"
+                accept="image/*"
+                class="hidden"
+              />
+              <div class="story-content">
+                <div class="story-question">
+                  What's your favorite baseball memory?
+                </div>
+                <textarea id="story4" name="story4"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADDED: Mentorship Availability Section -->
+          <h3 class="section-header">Set Your Mentorship Availability</h3>
+          <p class="mb-20">
+            Choose days of the week and add available time slots for mentoring
+            other players.
+          </p>
+
+          <div id="days-container">
+            <!-- Days and time slots will be generated here by JavaScript -->
+          </div>
+
+          <div class="btn-container">
+            <button type="button" id="save-form" class="btn btn-primary">
+              Save Profile & Availability
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        //all info down not needed
+        // Check if we are editing
+        if (sessionStorage.getItem("editMode") === "true") {
+          const profileData = JSON.parse(
+            sessionStorage.getItem("playerProfileData") || "{}"
+          );
+
+          Object.keys(profileData).forEach((key) => {
+            const el = document.getElementById(key);
+            if (el && typeof profileData[key] === "string") {
+              el.value = profileData[key];
+            }
+          });
+
+          sessionStorage.removeItem("editMode");
+        }
+        // All info up not needed
+
+        console.log("Player information form loaded");
+
+        // Image upload functionality
+        const profileUpload = document.getElementById("profile-upload");
+        const profileInput = document.getElementById("profilePicture");
+
+        profileUpload.addEventListener("click", function () {
+          profileInput.click();
+        });
+
+        // Handle profile picture preview
+        profileInput.addEventListener("change", function () {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              profileUpload.innerHTML =
+                '<img src="' +
+                e.target.result +
+                '" style="max-width:100%; max-height:100px;">';
+            };
+
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+        // Story image uploads
+        for (let i = 1; i <= 4; i++) {
+          const storyUpload = document.getElementById("story" + i + "-upload");
+          const storyInput = document.getElementById("story" + i + "Image");
+
+          storyUpload.addEventListener("click", function () {
+            storyInput.click();
+          });
+
+          storyInput.addEventListener("change", function () {
+            if (this.files && this.files[0]) {
+              const reader = new FileReader();
+
+              reader.onload = function (e) {
+                storyUpload.innerHTML =
+                  '<img src="' +
+                  e.target.result +
+                  '" style="width:100%; height:100%; object-fit:cover;">';
+              };
+
+              reader.readAsDataURL(this.files[0]);
+            }
+          });
+        }
+
+        // ADDED: Availability functionality
+
+        // Days of the week for availability setup
+        const days = [
+          { name: "Monday", selected: true },
+          { name: "Tuesday", selected: true },
+          { name: "Wednesday", selected: true },
+          { name: "Thursday", selected: true },
+          { name: "Friday", selected: true },
+          { name: "Saturday", selected: true },
+          { name: "Sunday", selected: true },
+        ];
+
+        const daysContainer = document.getElementById("days-container");
+
+        // Generate time options
+        function generateTimeOptions() {
+          const options = [];
+          for (let hour = 0; hour < 24; hour++) {
+            for (let minute = 0; minute < 60; minute += 15) {
+              const paddedHour = hour.toString().padStart(2, "0");
+              const paddedMinute = minute.toString().padStart(2, "0");
+              const time = `${paddedHour}:${paddedMinute}`;
+              options.push(`<option value="${time}">${time}</option>`);
+            }
+          }
+          return options.join("");
+        }
+
+        const timeOptions = generateTimeOptions();
+
+        // Create time slot element
+        function createTimeSlot(dayContainer) {
+          const timeSlot = document.createElement("div");
+          timeSlot.className = "time-slot";
+
+          timeSlot.innerHTML = `
+                <div class="time-controls">
+                    <div class="time-label">Start Time:</div>
+                    <select class="start-time">${timeOptions}</select>
+                    <div class="time-label">End Time:</div>
+                    <select class="end-time">${timeOptions}</select>
+                    <button class="remove-slot-btn">-</button>
+                </div>
+            `;
+
+          // Set default end time to be 1 hour later than start time
+          const startSelect = timeSlot.querySelector(".start-time");
+          const endSelect = timeSlot.querySelector(".end-time");
+
+          startSelect.value = "09:00";
+          endSelect.value = "10:00";
+
+          // Add event listener to remove button
+          const removeBtn = timeSlot.querySelector(".remove-slot-btn");
+          removeBtn.addEventListener("click", function () {
+            timeSlot.remove();
+          });
+
+          return timeSlot;
+        }
+
+        // Render each day
+        days.forEach((day) => {
+          const dayContainer = document.createElement("div");
+          dayContainer.className = "day-container";
+
+          const dayHeader = document.createElement("div");
+          dayHeader.className = "day-header";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "day-checkbox";
+          checkbox.checked = day.selected;
+          if (!day.selected) {
+            checkbox.classList.add("disabled");
+          }
+
+          const dayName = document.createElement("div");
+          dayName.className = "day-name";
+          dayName.textContent = day.name;
+
+          dayHeader.appendChild(checkbox);
+          dayHeader.appendChild(dayName);
+
+          const timeSlots = document.createElement("div");
+          timeSlots.className = "time-slots";
+
+          // Add initial time slot if day is selected
+          if (day.selected) {
+            timeSlots.appendChild(createTimeSlot(dayContainer));
+          }
+
+          // Add button to add more time slots
+          const addButton = document.createElement("button");
+          addButton.className = "add-slot-btn";
+          addButton.textContent = "+";
+          addButton.addEventListener("click", function () {
+            timeSlots.insertBefore(createTimeSlot(dayContainer), addButton);
+          });
+
+          timeSlots.appendChild(addButton);
+
+          // Toggle time slots based on checkbox
+          checkbox.addEventListener("change", function () {
+            if (this.checked) {
+              this.classList.remove("disabled");
+              // If no time slots, add one
+              const slots = timeSlots.querySelectorAll(".time-slot");
+              if (slots.length === 0) {
+                timeSlots.insertBefore(createTimeSlot(dayContainer), addButton);
+              }
+            } else {
+              this.classList.add("disabled");
+            }
+          });
+
+          dayContainer.appendChild(dayHeader);
+          dayContainer.appendChild(timeSlots);
+          daysContainer.appendChild(dayContainer);
+        });
+
+        // Save Form Button - now saves both profile and availability data
+        const saveFormBtn = document.getElementById("save-form");
+
+        saveFormBtn.addEventListener("click", function () {
+          console.log("Save button clicked");
+
+          // Validate required fields
+          const requiredFields = document.querySelectorAll("[required]");
+          let isValid = true;
+
+          requiredFields.forEach((field) => {
+            if (!field.value.trim()) {
+              field.style.borderColor = "#ff4d4d";
+              isValid = false;
+            } else {
+              field.style.borderColor = "#ddd";
+            }
+          });
+
+          if (!isValid) {
+            alert("Please fill in all required fields");
+            return;
+          }
+         
+
+          // 1. Create profile data object
+          const profileData = {
+            // Personal information
+            fullName: document.getElementById("fullName").value,
+            email: document.getElementById("email").value,
+            position: document.getElementById("position").value,
+            handedness: document.getElementById("handedness").value,
+            dateOfBirth: document.getElementById("dateOfBirth").value,
+            location: document.getElementById("location").value,
+            height: document.getElementById("height").value,
+            weight: document.getElementById("weight").value,
+
+            // School information
+            school: document.getElementById("school").value,
+            graduationYear: document.getElementById("graduationYear").value,
+            gpa: document.getElementById("gpa").value,
+            major: document.getElementById("major").value,
+            minor: document.getElementById("minor").value,
+            travelteam: document.getElementById("travelteam").value,
+            clubteam: document.getElementById("clubteam").value,
+
+            // Social media
+            instagram: document.getElementById("instagram").value,
+            twitter: document.getElementById("twitter").value,
+            facebook: document.getElementById("facebook").value,
+            youtube: document.getElementById("youtube").value,
+            highlightReel: document.getElementById("highlightReel").value,
+
+            // Player statement
+            playerStatement: document.getElementById("playerStatement").value,
+
+            // Stories
+            story1: document.getElementById("story1").value,
+            story2: document.getElementById("story2").value,
+            story3: document.getElementById("story3").value,
+            story4: document.getElementById("story4").value,
+
+            // Store actual image data as base64 string
+            story1Image:
+              document.querySelector("#story1-upload img")?.src || null,
+            story2Image:
+              document.querySelector("#story2-upload img")?.src || null,
+            story3Image:
+              document.querySelector("#story3-upload img")?.src || null,
+            story4Image:
+              document.querySelector("#story4-upload img")?.src || null,
+
+            // Image data handling
+            profileImage:
+              document.getElementById("profilePicture").files.length > 0
+                ? document.querySelector("#profile-upload img")?.src || null
+                : null,
+
+            // Creation timestamp
+            createdAt: new Date().toISOString(),
+          };
+
+          console.log("Profile data object created:", profileData);
+
+          // 2. Create availability data object
+          const availability = {};
+
+          document
+            .querySelectorAll(".day-container")
+            .forEach((dayContainer) => {
+              const dayName =
+                dayContainer.querySelector(".day-name").textContent;
+              const isSelected =
+                dayContainer.querySelector(".day-checkbox").checked;
+
+              if (isSelected) {
+                const timeSlots = [];
+                dayContainer.querySelectorAll(".time-slot").forEach((slot) => {
+                  const startTime = slot.querySelector(".start-time").value;
+                  const endTime = slot.querySelector(".end-time").value;
+                  timeSlots.push({ start: startTime, end: endTime });
+                });
+
+                availability[dayName] = timeSlots;
+              } else {
+                availability[dayName] = [];
+              }
+            });
+
+          console.log("Availability data object created:", availability);
+
+          // 3. Store both data objects in sessionStorage
+          // try {
+          //     sessionStorage.setItem('playerProfileData', JSON.stringify(profileData));
+          //     sessionStorage.setItem('playerAvailabilityData', JSON.stringify(availability));
+
+          //     console.log("All data successfully saved to sessionStorage");
+
+          //     // Instead of showing success message, redirect to profile page immediately
+          //     window.location.href = 'profile_page.html';
+          // } catch (error) {
+          //     console.error("Error saving to sessionStorage:", error);
+          //     alert("There was a problem saving your profile. Please try again.");
+          // }
+
+          // Send to PHP backend
+          fetch("submit_profile.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(profileData),
+          })
+            .then((res) => res.text())
+            .then((response) => {
+              if (response.trim() === "success") {
+                window.location.href = "profile_page.html";
+              } else {
+                alert("Error saving profile: " + response);
+              }
+            })
+            // .catch((error) => {
+            //   console.error("Error:", error);
+            //   alert("Something went wrong.");
+            // });
+
+            // 3. Store both data objects in sessionStorage  NOT NEEDED
+          try {
+            sessionStorage.setItem(
+              "playerProfileData",
+              JSON.stringify(profileData)
+            );
+            sessionStorage.setItem(
+              "playerAvailabilityData",
+              JSON.stringify(availability)
+            );
+
+            console.log("All data successfully saved to sessionStorage");
+
+            // Instead of showing success message, redirect to profile page immediately
+            window.location.href = "profile_page.html";
+          } catch (error) {
+            console.error("Error saving to sessionStorage:", error);
+            alert("There was a problem saving your profile. Please try again.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

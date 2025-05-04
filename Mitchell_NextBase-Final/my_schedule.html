@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextBase - My Schedule</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+        /* Header styling */
+header {
+    background-color: #082567;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #4aa9e6;
+}
+
+
+
+
+        /* Main Content */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .meetings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .meeting-section {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #0a2668;
+            font-weight: bold;
+        }
+
+        .meeting-tile {
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .meeting-tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .meeting-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .meeting-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .meeting-info {
+            flex-grow: 1;
+        }
+
+        .meeting-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .meeting-purpose {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .meeting-time {
+            color: #0a2668;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .meeting-status {
+            background-color: #e5f1ff;
+            color: #0a2668;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .meeting-status.active {
+            background-color: #d4ffe5;
+            color: #0a7a2a;
+        }
+
+        .meeting-details {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .details-section {
+            margin-bottom: 10px;
+        }
+
+        .details-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0a2668;
+        }
+
+        .details-content {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .bio-link {
+            display: inline-block;
+            color: #0a2668;
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .bio-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-meetings {
+            text-align: center;
+            color: #888;
+            padding: 30px 0;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <div class="logo">
+          <img src="logo.png" alt="NextBase Logo" />
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home_1.html">Home</a></li>
+            <li><a href="recruiting-feedback.html">Recruiting Feedback</a></li>
+            <li><a href="my_schedule.html">My Schedule</a></li>
+            <li><a href="profile_page.html">My Profile</a></li>
+            <li><a href="player_directory.html">Player Hub</a></li>
+            <li><a href="home.html">Logout</a></li>
+          </ul>
+        </nav>
+      </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Your Scheduled Meetings</h1>
+        
+        <div class="meetings-grid">
+            <!-- My Mentees Section -->
+            <div class="meeting-section">
+                <div class="section-title">My Mentees</div>
+                
+                <!-- Meeting Tile 1 -->
+                <div class="meeting-tile" onclick="joinMeeting('meeting1')">
+                    <div class="meeting-header">
+                        <img src="playerimages/john.png" alt="John Apton" class="meeting-photo">
+                        <div class="meeting-info">
+                            <div class="meeting-name">John Apton</div>
+                            <div class="meeting-purpose">Mentorship Meeting</div>
+                            <div class="meeting-time">2 May, 2025 • 10:00 AM</div>
+                        </div>
+                        <span class="meeting-status">Upcoming</span>
+                    </div>
+                    
+                    <div class="meeting-details">
+                        <div class="details-section">
+                            <div class="details-title">Mentee wants to talk about:</div>
+                            <div class="details-content">
+                                How to reach out to college coaches and what videos to include in hignlight reels. 
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- My Mentors Section -->
+            <div class="meeting-section">
+                <div class="section-title">My Mentors</div>
+                
+                <!-- Meeting Tile 2 -->
+                <div class="meeting-tile" onclick="joinMeeting('meeting3')">
+                    <div class="meeting-header">
+                        <img src="playerimages/liam.png" alt="Liam Peterson" class="meeting-photo">
+                        <div class="meeting-info">
+                            <div class="meeting-name">Liam Peterson</div>
+                            <div class="meeting-purpose">Mentorship Meeting</div>
+                            <div class="meeting-time">2 May, 2025 • 11:00 AM</div>
+                        </div>
+                        <span class="meeting-status">Upcoming</span>
+                    </div>
+                    
+                    <div class="meeting-details">
+                        <div class="details-section">
+                            <div class="details-title">You want to talk about:</div>
+                            <div class="details-content">
+                                What the transition from high school to college athletics is really like.
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Replace the existing script in my_schedule.html with this version
+
+// Function to join a meeting
+function joinMeeting(meetingId) {
+    // Check if the meeting is active (can be joined now)
+    const meetingTile = document.querySelector(`[onclick="joinMeeting('${meetingId}')"]`);
+    const statusElement = meetingTile.querySelector('.meeting-status');
+    
+    if (statusElement.classList.contains('active')) {
+        console.log(`Joining meeting: ${meetingId}`);
+        // Redirect to conference room
+        // window.location.href = `/conference-room/${meetingId}`;
+        alert(`Redirecting to conference room for meeting: ${meetingId}`);
+    } else {
+        alert("This meeting is not active yet. Please join at the scheduled time.");
+    }
+}
+
+// Load all scheduled meetings from session storage
+function loadScheduledMeetings() {
+    // Get mentor meetings from session storage
+    const myMentors = JSON.parse(sessionStorage.getItem('myMentors')) || [];
+    const mentorsContainer = document.querySelector('.meeting-section:nth-child(2)');
+    
+    // If we have stored meetings, add them to the UI
+    if (myMentors.length > 0) {
+        // Clear any "no meetings" message if it exists
+        const noMeetings = mentorsContainer.querySelector('.no-meetings');
+        if (noMeetings) {
+            mentorsContainer.removeChild(noMeetings);
+        }
+        
+        // Add each meeting
+        myMentors.forEach(meeting => {
+            const meetingTile = document.createElement('div');
+            meetingTile.className = 'meeting-tile';
+            meetingTile.setAttribute('onclick', `joinMeeting('${meeting.id}')`);
+            
+            meetingTile.innerHTML = `
+                <div class="meeting-header">
+                    <img src="${meeting.playerPhoto}" alt="${meeting.playerName}" class="meeting-photo">
+                    <div class="meeting-info">
+                        <div class="meeting-name">${meeting.playerName}</div>
+                        <div class="meeting-purpose">Mentorship Meeting</div>
+                        <div class="meeting-time">${meeting.date} • ${meeting.time}</div>
+                    </div>
+                    <span class="meeting-status">Upcoming</span>
+                </div>
+                
+                <div class="meeting-details">
+                    <div class="details-section">
+                        <div class="details-title">You want to talk about:</div>
+                        <div class="details-content">
+                            ${meeting.notes || "No notes provided."}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            mentorsContainer.appendChild(meetingTile);
+        });
+    } else if (mentorsContainer.querySelectorAll('.meeting-tile').length === 0) {
+        // If no meetings are scheduled and no hardcoded meetings exist
+        const noMeetings = document.createElement('div');
+        noMeetings.className = 'no-meetings';
+        noMeetings.textContent = 'No meetings scheduled yet.';
+        mentorsContainer.appendChild(noMeetings);
+    }
+}
+
+// Demo function to update meeting status based on current time
+function updateMeetingStatus() {
+    const now = new Date();
+    const meetingTiles = document.querySelectorAll('.meeting-tile');
+    
+    meetingTiles.forEach(tile => {
+        const timeElement = tile.querySelector('.meeting-time');
+        const statusElement = tile.querySelector('.meeting-status');
+        
+        if (!timeElement || !statusElement) return;
+        
+        // Extract date and time information
+        const timeText = timeElement.textContent;
+        
+        // Parse the meeting date and time
+        try {
+            // Extract date parts (assuming format like "May 16, 2025 • 1:00 PM" or "16 May, 2025 • 1:00 PM")
+            const dateParts = timeText.split('•');
+            if (dateParts.length < 2) return;
+            
+            const dateStr = dateParts[0].trim();
+            const timeStr = dateParts[1].trim();
+            
+            // Create a date object from the extracted info
+            const meetingDate = new Date(`${dateStr} ${timeStr}`);
+            
+            // Check if the meeting time is within 15 minutes of now (for "Join Now")
+            const diffMs = meetingDate - now;
+            const diffMins = diffMs / (1000 * 60);
+            
+            if (diffMins <= 15 && diffMins >= -30) {
+                // Meeting is happening now or very soon
+                statusElement.classList.add('active');
+                statusElement.textContent = 'Join Now';
+            } else if (diffMins < -30) {
+                // Meeting has passed
+                statusElement.classList.remove('active');
+                statusElement.textContent = 'Completed';
+            } else {
+                // Meeting is in the future
+                statusElement.classList.remove('active');
+                statusElement.textContent = 'Upcoming';
+            }
+        } catch (e) {
+            console.error("Error parsing meeting date:", e);
+        }
+    });
+}
+
+// Call these functions on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadScheduledMeetings();
+    updateMeetingStatus();
+    
+    // Update every minute (for demo purposes)
+    setInterval(updateMeetingStatus, 60000);
+});
+    </script>
+</body>
+</html>

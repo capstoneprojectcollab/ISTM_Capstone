@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextBase - Home</title>
+    <link rel="icon" href="icon.png" type="image/png" />
+    <link rel="stylesheet" href="styles/indexstyle.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header/Nav -->
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="NextBase Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="login_page.html">LogIn</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Image Slider -->
+    <section class="hero-slider" id="home">
+      <div class="slides">
+        <img src="chat.png" alt="Slide 1" />
+        <img src="demo.png" alt="Slide 2" />
+        <img src="handshake.png" alt="Slide 3" />
+      </div>
+      <div class="hero-text">
+        <h1>Welcome to NextBase</h1>
+        <p>
+          Connect with college baseball players for mentorship, guidance, and
+          growth.
+        </p>
+        <a href="login_page.html" class="cta-button big-cta"
+          >Become a Founding Player</a
+        >
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <!-- About Us Section with 2 POV Timelines (College on Top) -->
+    <section id="about" class="section">
+      <h2>About Us</h2>
+      <div class="section-content about-text">
+        <p>
+          We are all achievers and there are more than
+          <strong>20,000</strong> of us — college baseball players who know how
+          to reach the next level of athletic success. We’ve been in your shoes
+          and understand the challenges. Let us help you navigate the process
+          and achieve your goals.
+        </p>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="section">
+      <h2>How It Works</h2>
+      <p class="subhead">
+        Whether you're a college mentor or a high school player, NextBase
+        connects you with the future of baseball.
+      </p>
+
+      <div class="timeline-container">
+        <!-- College Mentor Journey -->
+        <div class="timeline-box">
+          <h3><i class="fas fa-chalkboard-teacher"></i> College Mentors</h3>
+          <div class="steps">
+            <div class="step">
+              <i class="fas fa-user-plus"></i>
+              <h4>Join the Platform</h4>
+              <p>
+                Create a profile and set your availability to offer mentorship,
+                training tips, and advice to aspiring players.
+              </p>
+            </div>
+            <div class="step">
+              <i class="fas fa-comments"></i>
+              <h4>Connect with Athletes</h4>
+              <p>
+                Meet with players, answer questions, and share insights from
+                your own recruiting experience.
+              </p>
+            </div>
+            <div class="step">
+              <i class="fas fa-handshake"></i>
+              <h4>Make an Impact</h4>
+              <p>
+                Give back to the baseball community and earn income by helping
+                the next generation reach their goals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- High School Player Journey -->
+        <div class="timeline-box">
+          <h3><i class="fas fa-user-graduate"></i> High School Players</h3>
+          <div class="steps">
+            <div class="step">
+              <i class="fas fa-search"></i>
+              <h4>Find a Mentor</h4>
+              <p>
+                Browse a directory of current college athletes and discover your
+                ideal mentor based on position, school, or experience.
+              </p>
+            </div>
+            <div class="step">
+              <i class="fas fa-calendar-check"></i>
+              <h4>Schedule a Session</h4>
+              <p>
+                Book virtual sessions to get one-on-one recruiting advice and
+                skill development support.
+              </p>
+            </div>
+            <div class="step">
+              <i class="fas fa-chart-line"></i>
+              <h4>Grow Your Game</h4>
+              <p>
+                Use personalized guidance to improve your performance and
+                prepare for the next level.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p>Have questions or feedback or want to partner with us?</p>
+      <p>Reach out to us directly at:</p>
+      <p>
+        <a href="mailto:contact@nextbase.com" class="contact-email">
+          <i class="fas fa-envelope"></i> contact@nextbase.com
+        </a>
+      </p>
+
+      <div class="social-links">
+        <a
+          href="https://instagram.com/nextbase"
+          target="_blank"
+          title="Instagram"
+          ><i class="fab fa-instagram"></i
+        ></a>
+        <a href="https://twitter.com/nextbase" target="_blank" title="Twitter"
+          ><i class="fab fa-twitter"></i
+        ></a>
+        <a
+          href="https://linkedin.com/company/nextbase"
+          target="_blank"
+          title="LinkedIn"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 NextBase. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Basic slider rotation
+      const slides = document.querySelectorAll(".slides img");
+      let index = 0;
+      setInterval(() => {
+        slides.forEach((slide, i) => {
+          slide.style.display = i === index ? "block" : "none";
+        });
+        index = (index + 1) % slides.length;
+      }, 4000);
+    </script>
+  </body>
+</html>
