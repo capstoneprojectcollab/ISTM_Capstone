@@ -4,7 +4,7 @@
 
 ## 🌐 Live Demo
 
-- 🌍 Website: [http://nextbase.club](https://nextbase.club)
+- 🌍 Website: [https://nextbase.club](https://nextbase.club)
 - 📂 File Manager: [GoDaddy File Manager (Login Required)](https://p3plzcpnl508782.prod.phx3.secureserver.net:2083/cpsess4403780188/frontend/jupiter/filemanager/index.html?login=1&post_login=90167616032438)
 - 💾 Database: [phpMyAdmin for playerdatabase](https://p3plzcpnl508782.prod.phx3.secureserver.net:2083/cpsess4403780188/3rdparty/phpMyAdmin/index.php?route=/database/structure&db=playerdatabase)
 
