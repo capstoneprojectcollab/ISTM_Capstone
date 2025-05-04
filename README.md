@@ -30,8 +30,15 @@ Tables are accessible via phpMyAdmin and include data on:
 - User login credentials
 - Player profile details
 - Availability and mentorship schedule
+- game_info
+- meetings
+- players
+- school_info
+- story_answers
+- social_links
+- profiles
+- users
 
-![Screenshot 2025-05-04 at 3 43 39 AM](https://github.com/user-attachments/assets/ecba9116-83f5-449f-b9a0-2d4ace469afd)
 
 ## 🛠 Technologies Used
 
